@@ -1,0 +1,221 @@
+<title>Founders Radar Index</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one sticky bar (name, views, search), a figures-and-histogram band that doubles as the year filter, then a dense ledger of expandable rows. */
+:root{
+  --bg:#F2F5F4; --surface:#FFFFFF; --ink:#0F1F1C; --muted:#586964; --line:#D5DEDB; --accent:#0A6B5A; --accent-soft:#D3EAE4; --bar:#A9BDB7;
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",sans-serif;
+  --body:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1513;--surface:#121F1C;--ink:#E4EEEB;--muted:#8DA29C;--line:#243630;--accent:#52CFAF;--accent-soft:#17382F;--bar:#3A5049;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0B1513;--surface:#121F1C;--ink:#E4EEEB;--muted:#8DA29C;--line:#243630;--accent:#52CFAF;--accent-soft:#17382F;--bar:#3A5049;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:10px 24px;padding-block:12px}
+h1{font:700 22px/1 var(--display);letter-spacing:-.02em;margin:0}
+nav{display:flex;gap:4px}
+nav a{text-decoration:none;padding:6px 10px;border-radius:6px;color:var(--muted);font-weight:500;white-space:nowrap}
+nav a .num{font-size:12px;margin-left:4px}
+nav a[aria-current]{background:var(--ink);color:var(--bg)}
+#q{flex:1 1 220px;min-width:0;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+
+.band{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;padding-block:28px 20px;align-items:end}
+.figs{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;align-items:baseline;margin:0}
+.figs dt{font:700 34px/1 var(--display);letter-spacing:-.03em;text-align:right}
+.figs dd{margin:0;color:var(--muted)}
+.hist{display:flex;align-items:flex-end;gap:2px;height:120px;border-bottom:1px solid var(--line);position:relative}
+.hist button{flex:1;min-width:0;padding:0;border:0;background:var(--bar);border-radius:2px 2px 0 0;cursor:pointer}
+.hist button:hover,.hist button[aria-pressed="true"]{background:var(--accent)}
+.hist .max{position:absolute;left:0;top:-4px;font-size:11px;color:var(--muted)}
+.axis{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);padding-top:4px}
+
+.tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding-block:8px 12px}
+.tools select,.chip{padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+#count{margin-left:auto;color:var(--muted);font-size:13px}
+
+.list{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.list>*+*{border-top:1px solid var(--line)}
+summary{display:grid;grid-template-columns:minmax(0,1fr) 56px 92px 104px;gap:16px;align-items:baseline;padding:12px 16px;cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary:hover,details[open]>summary{background:var(--accent-soft)}
+.nm{font:500 17px/1.25 var(--display);letter-spacing:-.01em}
+.ds{display:block;color:var(--muted);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+details[open] .ds{white-space:normal}
+summary .num{font-size:13px;text-align:right;color:var(--muted)}
+summary .amt{color:var(--ink);font-weight:500}
+.more{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px 32px;padding:4px 16px 18px}
+.more h2{font:600 12px/1.4 var(--body);color:var(--muted);margin:0 0 6px}
+.more ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.more li{min-width:0;overflow-wrap:anywhere}
+.sub{color:var(--muted);font-size:13px}
+.ext{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.link{background:none;border:0;padding:0;color:var(--accent);text-decoration:underline;text-underline-offset:2px;cursor:pointer;text-align:left}
+
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0}
+.people.list>*+*{border-top:0}
+.person{padding:14px 16px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);min-width:0;overflow-wrap:anywhere}
+.person .links{display:flex;gap:12px;font-size:13px;margin-top:4px}
+.news>div{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;padding:12px 16px}
+.news .num{font-size:13px;color:var(--muted)}
+.empty{padding:32px 16px;color:var(--muted)}
+#more{display:block;margin:16px auto;padding:8px 16px;border:1px solid var(--line);border-radius:6px;background:var(--surface);cursor:pointer}
+footer{padding-block:24px 40px;color:var(--muted);font-size:13px}
+
+@media (max-width:720px){
+  .top{position:static}
+  .band{grid-template-columns:minmax(0,1fr);gap:24px}
+  summary{grid-template-columns:minmax(0,1fr) auto;gap:2px 12px}
+  summary .main{grid-column:1/-1}
+  summary .num{text-align:left}
+  summary .num:empty{display:none}
+  .news>div{grid-template-columns:minmax(0,1fr);gap:2px}
+  nav a .num{display:none}
+}
+</style>
+
+<header class="top"><div class="wrap">
+  <h1>Founders Radar</h1>
+  <nav aria-label="Views">
+    <a href="#startups" data-v="startups">Startups<span class="num" id="n-startups"></span></a>
+    <a href="#founders" data-v="founders">Founders<span class="num" id="n-founders"></span></a>
+    <a href="#news" data-v="news">News<span class="num" id="n-news"></span></a>
+  </nav>
+  <input id="q" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
+</div></header>
+
+<main class="wrap">
+  <section class="band" id="band" hidden>
+    <dl class="figs" id="figs"></dl>
+    <div>
+      <div class="hist" id="hist" role="group" aria-label="Startups founded per year. Select a year to filter."></div>
+      <div class="axis num" id="axis"></div>
+    </div>
+  </section>
+  <div class="tools" id="tools" hidden>
+    <select id="sort" aria-label="Sort">
+      <option value="u">Recently updated</option>
+      <option value="r">Most raised</option>
+      <option value="lf">Latest round</option>
+      <option value="y">Newest</option>
+      <option value="-y">Oldest</option>
+      <option value="n">A–Z</option>
+    </select>
+    <button class="chip" id="f-r" aria-pressed="false">Funding disclosed</button>
+    <button class="chip" id="f-f" aria-pressed="false">IESE founder named</button>
+    <button class="chip" id="f-y" aria-pressed="true" hidden></button>
+    <span id="count" aria-live="polite"></span>
+  </div>
+  <div id="out"><p class="empty">Loading…</p></div>
+  <button id="more" hidden>Show more</button>
+</main>
+
+<footer class="wrap">Unofficial. Data read from foundersradar.iese.edu on <span id="scraped"></span>; that site takes it from Crunchbase. Funding figures cover only companies with a disclosed amount.</footer>
+
+<script>
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const MON='Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ');
+const day=s=>s?`${+s.slice(8)} ${MON[+s.slice(5,7)-1]} ${s.slice(0,4)}`:'';
+const eur=n=>!n?'':n>=1e9?`€${(n/1e9).toFixed(1)}B`:n>=1e6?`€${(n/1e6).toFixed(1)}M`:`€${Math.round(n/1e3)}K`;
+const cb=(k,id)=>`https://www.crunchbase.com/${k}/${encodeURIComponent(id)}`;
+const ext=(u,t)=>`<a class="ext" href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`;
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+const Y0=1990, PAGE=100;
+let D, news, st={v:'startups',q:'',sort:'u',r:false,f:false,y:null,shown:PAGE,open:null};
+
+function startupRow(s){
+  const li=(a,fn)=>a?.length?`<ul>${a.map(fn).map(x=>`<li>${x}</li>`).join('')}</ul>`:'';
+  return `<details id="s-${esc(s.id)}"${st.open===s.id?' open':''}><summary>
+    <span class="main"><span class="nm">${esc(s.n)}</span><span class="ds">${esc(s.d)}</span></span>
+    <span class="num">${s.y||''}</span><span class="num amt">${eur(s.r)}</span><span class="num">${day(s.lf)}</span></summary>
+    <div class="more">
+      ${s.f?`<div><h2>IESE founders</h2>${li(s.f,f=>`${ext(cb('person',f[3]),f[0])}${f[1]?`<div class="sub">${esc(f[1])}</div>`:''}${f[2]?`<div class="sub">${ext(f[2],'LinkedIn')}</div>`:''}`)}</div>`:''}
+      ${s.o?`<div><h2>Other founders</h2>${li(s.o,f=>ext(cb('person',f[1]),f[0]))}</div>`:''}
+      ${s.h?`<div><h2>Headlines</h2>${li(s.h,h=>`${ext(h[3],h[0])}<div class="sub">${esc(h[1])}${h[2]?' · '+day(h[2]):''}</div>`)}</div>`:''}
+      <div><h2>Record</h2><ul><li>${ext(cb('organization',s.id),'Crunchbase profile')}</li>${s.u?`<li class="sub">Updated ${day(s.u)}</li>`:''}</ul></div>
+    </div></details>`;
+}
+const jump=(id,name)=>id?`<button class="link" data-jump="${esc(id)}">${esc(name)}</button>`:esc(name);
+function personCard(p){
+  return `<div class="person"><div class="nm">${ext(cb('person',p.id),p.n)}</div>
+    <div>${p.c?jump(p.in&&p.ci,p.c):''}${p.ro?` <span class="sub">${esc(p.ro)}</span>`:''}</div>
+    ${p.p?`<div class="sub">${esc(p.p)}</div>`:''}
+    ${p.li||p.x?`<div class="links">${p.li?ext(p.li,'LinkedIn'):''}${p.x?ext(p.x,'X'):''}</div>`:''}</div>`;
+}
+const newsRow=h=>`<div><span class="num">${day(h.d)}</span><div>${ext(h.u,h.t)}<div class="sub">${esc(h.p)} · ${jump(h.id,h.n)}</div></div></div>`;
+
+function rows(){
+  const q=norm(st.q.trim());
+  if(st.v==='founders') return D.founders.filter(p=>!q||p._s.includes(q));
+  if(st.v==='news') return news.filter(h=>!q||h._s.includes(q));
+  let a=D.startups.filter(s=>(!q||s._s.includes(q))&&(!st.r||s.r)&&(!st.f||s.f)&&(st.y===null||(st.y<Y0?s.y&&s.y<Y0:s.y===st.y)));
+  const k=st.sort;
+  if(k==='n') a.sort((x,y)=>x.n.localeCompare(y.n));
+  else if(k==='-y') a=a.filter(s=>s.y).sort((x,y)=>x.y-y.y);
+  else if(k!=='u') a=a.filter(s=>s[k]).sort((x,y)=>x[k]<y[k]?1:x[k]>y[k]?-1:0);
+  return a;
+}
+function render(){
+  const isS=st.v==='startups', a=rows(), cut=a.slice(0,st.shown);
+  document.querySelectorAll('nav a').forEach(x=>x.dataset.v===st.v?x.setAttribute('aria-current','page'):x.removeAttribute('aria-current'));
+  $('#band').hidden=$('#tools').hidden=!isS;
+  $('#f-r').setAttribute('aria-pressed',st.r); $('#f-f').setAttribute('aria-pressed',st.f);
+  $('#f-y').hidden=st.y===null; $('#f-y').textContent=st.y===null?'':`${st.y<Y0?'Before '+Y0:st.y} ×`;
+  document.querySelectorAll('#hist button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.y===st.y));
+  $('#count').textContent=`${a.length.toLocaleString()} of ${D.startups.length.toLocaleString()}`;
+  $('#out').innerHTML=!a.length?'<p class="empty">Nothing matches.</p>':
+    isS?`<div class="list">${cut.map(startupRow).join('')}</div>`:
+    st.v==='founders'?`<div class="list people">${cut.map(personCard).join('')}</div>`:
+    `<div class="list news">${cut.map(newsRow).join('')}</div>`;
+  $('#more').hidden=a.length<=st.shown;
+  if(st.open){document.getElementById('s-'+st.open)?.scrollIntoView({block:'center'});st.open=null}
+}
+const set=p=>{Object.assign(st,{shown:PAGE},p);render()};
+
+function boot(d){
+  D=d;
+  D.startups.forEach((s,i)=>{s._s=norm([s.n,s.d,...(s.f||[]).map(f=>f[0]),...(s.o||[]).map(f=>f[0])].join(' '))});
+  D.founders.forEach(p=>p._s=norm([p.n,p.c,p.ro,p.p].join(' ')));
+  news=D.startups.flatMap(s=>(s.h||[]).map(h=>({t:h[0],p:h[1],d:h[2],u:h[3],n:s.n,id:s.id,_s:norm(h[0]+' '+h[1]+' '+s.n)}))).sort((a,b)=>a.d<b.d?1:-1);
+  $('#n-startups').textContent=D.startups.length.toLocaleString(); $('#n-founders').textContent=D.founders.length; $('#n-news').textContent=news.length.toLocaleString();
+  $('#scraped').textContent=day(D.scraped);
+  const funded=D.startups.filter(s=>s.r), total=funded.reduce((t,s)=>t+s.r,0);
+  $('#figs').innerHTML=[[D.startups.length.toLocaleString(),'startups'],[D.founders.length,'IESE founders'],[eur(total),`raised by ${funded.length} of them`]].map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('');
+  const yNow=Math.max(...D.startups.map(s=>s.y||0)), c={};
+  D.startups.forEach(s=>{if(s.y){const k=s.y<Y0?Y0-1:s.y;c[k]=(c[k]||0)+1}});
+  const max=Math.max(...Object.values(c));
+  let h=`<span class="max num">${max}</span>`;
+  for(let y=Y0-1;y<=yNow;y++){const n=c[y]||0,l=y<Y0?'Before '+Y0:y;h+=`<button data-y="${y}" style="height:${Math.max(n/max*100,n?2:0)}%" title="${l}: ${n}" aria-label="${l}: ${n} startups" aria-pressed="false"${n?'':' disabled'}></button>`}
+  $('#hist').innerHTML=h;
+  $('#axis').innerHTML=`<span>&lt;${Y0}</span><span>${Math.round((Y0+yNow)/2)}</span><span>${yNow}</span>`;
+  route();
+}
+function route(){const h=location.hash.slice(1),v=['founders','news'].includes(h)?h:'startups';if(v!==st.v||!$('#out').firstElementChild?.classList.contains('list'))set({v})}
+addEventListener('hashchange',route);
+$('#q').addEventListener('input',e=>set({q:e.target.value}));
+$('#sort').addEventListener('change',e=>set({sort:e.target.value}));
+$('#f-r').addEventListener('click',()=>set({r:!st.r}));
+$('#f-f').addEventListener('click',()=>set({f:!st.f}));
+$('#f-y').addEventListener('click',()=>set({y:null}));
+$('#hist').addEventListener('click',e=>{const b=e.target.closest('button');if(b)set({y:st.y===+b.dataset.y?null:+b.dataset.y})});
+$('#more').addEventListener('click',()=>{st.shown+=PAGE;render()});
+$('#out').addEventListener('click',e=>{
+  const b=e.target.closest('[data-jump]'); if(!b) return;
+  const id=b.dataset.jump, i=D.startups.findIndex(s=>s.id===id);
+  $('#q').value=''; $('#sort').value='u';
+  Object.assign(st,{q:'',sort:'u',r:false,f:false,y:null,open:id});
+  st.v='startups'; location.hash='startups'; set({shown:Math.max(PAGE,i+1)});
+});
+fetch('data.json').then(r=>r.json()).then(boot).catch(()=>{$('#out').innerHTML='<p class="empty">The data file did not load. Reload the page.</p>'});
+</script>
