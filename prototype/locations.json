@@ -1,0 +1,82 @@
+[
+ {
+  "id": "grenergy-renovables-sa",
+  "city": "Madrid",
+  "country": "ES",
+  "lat": 40.42,
+  "lng": -3.7,
+  "source": "https://grenergy.eu/en/contact/"
+ },
+ {
+  "id": "capchase",
+  "city": "New York",
+  "country": "US",
+  "lat": 40.71,
+  "lng": -74.01,
+  "source": "https://www.capchase.com/about"
+ },
+ {
+  "id": "multiverse-computing",
+  "city": "San Sebastián",
+  "country": "ES",
+  "lat": 43.32,
+  "lng": -1.98,
+  "source": "https://multiversecomputing.com/legal-notice"
+ },
+ {
+  "id": "klar",
+  "city": "Mexico City",
+  "country": "MX",
+  "lat": 19.43,
+  "lng": -99.13,
+  "source": "https://www.klar.mx/"
+ },
+ {
+  "id": "moonfare",
+  "city": "Berlin",
+  "country": "DE",
+  "lat": 52.52,
+  "lng": 13.4,
+  "source": "https://www.moonfare.com/imprint"
+ },
+ {
+  "id": "westwing",
+  "city": "Munich",
+  "country": "DE",
+  "lat": 48.14,
+  "lng": 11.58,
+  "source": "https://www.westwing.de/"
+ },
+ {
+  "id": "hastee-pay",
+  "city": "London",
+  "country": "GB",
+  "lat": 51.51,
+  "lng": -0.13,
+  "source": "https://www.hastee.com/"
+ },
+ {
+  "id": "cooltra",
+  "city": "Barcelona",
+  "country": "ES",
+  "lat": 41.38,
+  "lng": 2.18,
+  "source": "https://www.cooltra.com/en/legal-notice/"
+ },
+ {
+  "id": "sateliot",
+  "city": "Barcelona",
+  "country": "ES",
+  "lat": 41.38,
+  "lng": 2.18,
+  "source": "https://sateliot.space/en/contact/"
+ },
+ {
+  "id": "laiye",
+  "city": "Beijing",
+  "country": "CN",
+  "lat": 39.91,
+  "lng": 116.39,
+  "source": "https://laiye.com/en/company/about"
+ }
+]

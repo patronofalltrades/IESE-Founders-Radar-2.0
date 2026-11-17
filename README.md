@@ -12,6 +12,7 @@ Target: live by Thanksgiving, Thursday 26 November 2026. The plan is in [PLAN.md
 | `components/ui/` | shadcn components. `testimonial-globe.tsx` is vendored from 21st.dev and not yet used on a page. |
 | `prototype/data.json` | The scraped dataset the site reads (1,049 startups, 575 founders). |
 | `prototype/index.html` | The earlier single-file prototype: search, sort, filters, founders and news views. |
+| `prototype/locations.json` | City and coordinates for 10 startups, each with the company page that states it. |
 | `scraper/` | Scripts that rebuild `prototype/data.json` from the source site. |
 
 ## Run the site
@@ -47,6 +48,14 @@ Then open http://localhost:8000. It needs a server because the page fetches `dat
 ```
 
 This downloads about 190 listing pages at a gentle rate into `scraper/raw/` (git-ignored), parses them, removes duplicates and writes `prototype/data.json`.
+
+## Refresh the locations
+
+```bash
+python3 scraper/locations.py
+```
+
+This re-reads each source page listed in `scraper/locations.csv`, drops any row whose page no longer states the city, and geocodes the rest with OpenStreetMap Nominatim (data © OpenStreetMap contributors, ODbL).
 
 ## Data
 

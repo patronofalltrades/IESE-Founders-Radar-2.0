@@ -6,12 +6,12 @@ An independent rebuild of IESE's Founders Radar. Read [README.md](README.md) for
 
 1. **Make the smallest change that meets the requirement.** Ask before adding code for problems that are only theoretical.
 2. **No taglines, helper text or decorative labels.** If a screen needs one to make sense, fix the layout.
-3. **One source of truth per fact.** Data lives in `prototype/data.json` and is only written by `scraper/`. Never hand-edit it. Design tokens live in `app/globals.css`.
+3. **One source of truth per fact.** Data lives in `prototype/data.json` and `prototype/locations.json`, both written only by `scraper/`. Never hand-edit them. To add a location, add a row to `scraper/locations.csv` with a page on the company's own site that states the city. Design tokens live in `app/globals.css`.
 4. **Keep PLAN.md current.** Move finished steps to Done and delete anything that no longer applies.
 
 ## Invariants
 
-- Never invent startups, founders, funding figures or headlines. Every fact shown must come from the scraped data.
+- Never invent startups, founders, funding figures or headlines. Every fact shown must come from the scraped data. A location must be stated on the company's own website.
 - Totals shown on the site are computed from the data, with the count they cover.
 - Do not use IESE or Crunchbase logos or branding. The site says it is unofficial and names its source.
 - Scrape gently: a few requests per second at most, and only the public listing pages.
