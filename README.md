@@ -70,8 +70,8 @@ This re-reads each page listed in `scraper/alumni.csv` and keeps a founder only 
 
 Rows get into `alumni.csv` through a daily scheduled run in Claude Code:
 
-1. `python3 scraper/alumni_next.py 60` prints the next 60 founders, most-funded startups first.
-2. `scraper/alumni-workflow.js` runs on them: a Haiku agent per founder searches for a page, then Sonnet agents fact-check the pages found, five to an agent, and record the person's name as the page writes it.
+1. `python3 scraper/alumni_next.py 60 1 scraper/raw/alumni-run.js` writes a copy of `scraper/alumni-workflow.js` with the next 60 founders built in, most-funded startups first.
+2. That copy runs as a workflow: a Haiku agent per founder searches for a page, then Sonnet agents fact-check the pages found, five to an agent, and record the person's name as the page writes it.
 3. `python3 scraper/alumni_record.py <journal> <date>` adds the Sonnet-confirmed founders to `alumni.csv` and the rest to `alumni-notfound.csv`.
 4. `python3 scraper/alumni.py` re-reads every page; a row it rejects moves to `alumni-notfound.csv`.
 5. `python3 scraper/alumni_usage.py <label> <founders> <transcripts>` appends token use and list-price cost per model to `scraper/alumni-runs.csv`.
