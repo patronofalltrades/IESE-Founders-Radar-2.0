@@ -22,7 +22,7 @@ rows = list(csv.DictReader(open(HERE / "alumni.csv", encoding="utf-8")))
 have = {r["id"] for r in rows}
 new = [v for v in verdicts.values() if v["verdict"] == "confirmed" and v["id"] not in have]
 with open(HERE / "alumni.csv", "a", newline="", encoding="utf-8") as f:
-    csv.writer(f).writerows([v["id"], v["source"], v["match"], v["programme"]] for v in new)
+    csv.writer(f).writerows([v["id"], v["source"], v["match"], v["programme"], v.get("name", "")] for v in new)
 have |= {v["id"] for v in new}
 known = {r["id"] for r in csv.DictReader(open(HERE / "alumni-notfound.csv"))}
 missed = sorted(searched - have - known)

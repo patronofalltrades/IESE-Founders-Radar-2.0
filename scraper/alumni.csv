@@ -1,37 +1,41 @@
-id,source,match,programme
-mr-mitchell-elegbe,https://interswitchgroup.com/company/leadership/mitchell-elegbe,An alumnus of the IESE/Wharton/CEIBS Global CEO Program,executive
-lucas-carne,https://hcspain.clubs.harvard.edu/article.html?aid=176,para posteriormente realizar un MBA en IESE.,degree
-tanner-hackett,https://www.insurtechny.com/?p=9529,He also completed an international exchange program at IESE Business School.,exchange
-avi-meir,https://www.iese.edu/stories/40-best-entrepreneurs-under-40-2022,"Avi Meir, an IESE MBA alum who founded the unicorn startup",degree
-benedicto-haryono,https://compasslist.com/founders/Benedicto-Haryono,Having studied at the IESE Business School,unknown
-stefan-moller,https://prdt.iese.edu/EIC-Newsletter-July-2025-35-EN,IESE 40under40 2022 awardee Stefan Möller,degree
-carlos-buesa-arjol,https://biography.omicsonline.org/spain/oryzon/carlos-buesa-1783622,He also completed the Senior Management Program (PADE) at IESE in 2005.,executive
-enrique-linares-plaza,https://www.iese.edu/standout/es/?p=6500,por el IESE y premio IESE 40under40,degree
-enrique-lizaso,https://www.iese.edu/es/noticias/iese-emprendimiento-cuantica/,cofundada por el alumni de IESE Enrique Lizaso,degree
-timo-buetefisch,https://iese.edu/standout/timo-buetefisch-cooltra-founder,he began his MBA at IESE,degree
-javier-darriba,https://www.seedrocket.com/mentores/mentores-nuestros/javier-darriba/,ha cursado el Advanced Management Program en IESE,executive
-daniel-callaghan-2,https://www.cityam.com/?p=2400943,MBA at IESE Business School,degree
-ferran-nogue,https://www.viaempresa.cat/es/empresa/annus-horribilis-holaluz-exito-tres-companeros-estudios-desenlace-incierto_2197424_102.html,"Carlota Pi, Ferran Nogué y Oriol Vila, estudiantes del máster Business Management en IESE",degree
-oriol-vila,https://www.viaempresa.cat/es/empresa/annus-horribilis-holaluz-exito-tres-companeros-estudios-desenlace-incierto_2197424_102.html,"Carlota Pi, Ferran Nogué y Oriol Vila, estudiantes del máster Business Management en IESE",degree
-carlota-pi,https://www.viaempresa.cat/es/empresa/annus-horribilis-holaluz-exito-tres-companeros-estudios-desenlace-incierto_2197424_102.html,"Carlota Pi, Ferran Nogué y Oriol Vila, estudiantes del máster Business Management en IESE",degree
-luca-carlucci,https://me.sh/profile/luca-carlucci,He earned his MBA from the prestigious IESE Business School,degree
-cristina-aleixendri-munoz,https://www.iese.edu/stories/40-best-entrepreneurs-under-40-2022/,IESE Executive MBA and co-founder of Bound4Blue,degree
-oscar-mendez,https://me.sh/profile/oscar-soto,Advanced degrees from IESE Business School,unknown
-kalle-radage,https://unboundequity.com/about/,an MBA from IESE in Spain,degree
-vincent-sos,https://prdt.iese.edu/EIC-Newsletter-July-2024-14-EN,"InvestCloud, co-founded by IESE alumnus Vincent Sos (GEMBA'08) in 2010",degree
-mario-cantero-5b08,https://imubiosciences.com/about-us/mario-cantero-mba,He holds an MBA from IESE Business School,degree
-jordi-blasco,https://prdt.iese.edu/EIC-Newsletter-Mar-2024-5-EN,"co-founded in 2019 by Jordi Blasco, IESE GMP 08",executive
-damaso-quintana,https://www.arteche.com/en/board-directors,holds an MBA from IESE,degree
-eva-romagosa,https://www.iese.edu/es/noticias/executive-mba-vajes-autocar/,graduados del Executive MBA del IESE en 2013,degree
-alex-canals,https://www.iese.edu/stories/executive-mbas-bus-travel/,As Alex Canals was completing his Executive MBA at IESE,degree
-rui-fernandes,https://blog.iese.edu/entrepreneurship/2021/02/12/finaves-financing-us-busup/,while doing an Executive MBA at IESE,degree
-marc-subirats,https://blog.iese.edu/estilosdedireccion/2011/02/23/emprendiendo-desde-el-mba/,que el IESE inculca a sus alumnos,degree
-felix-schollmeier,https://versicherungsmonitor.de/koepfe-der-branche-schollmeier-felix/,einen Master of Business Administration von der IESE Business School in Barcelona,degree
-oscar-macia,https://www.sage.com/es-es/blog/author/oscarmacia/,un Executive MBA de IESE Business School,degree
-hernan-scapusio,https://investors.agiletv.com/?p=25221,Management Development Program (PPD) from the IESE Business School (Spain),executive
-raul-insa,https://www.biocat.cat/en/current-news/news/repositioning-we-shave-5-or-6-years-drug-development-time,He has also participated in executive programs at IESE and Harvard.,executive
-ernest-pérez-mas,https://parlem.com/en/investors/,an Executive Education (PDG) from IESE,executive
-carles-franquesa,https://www.techbarcelona.com/en/?p=80215,MBA from ESADE and a PDG from IESE,executive
-martin-huete,https://me.sh/profile/martin-huete,He earned a Master in Business Administration from the IESE Business School,degree
-ruben-bonet,https://www.digitalsme.eu/event-forum-ict-standards-smes/,an MBA at IESE Business School,degree
-guillem-serra,https://www.arena-international.com/speaker/guillem-serra-autonell/,with an MBA from IESE Business School,degree
+id,source,match,programme,name
+mr-mitchell-elegbe,https://interswitchgroup.com/company/leadership/mitchell-elegbe,An alumnus of the IESE/Wharton/CEIBS Global CEO Program,executive,
+lucas-carne,https://hcspain.clubs.harvard.edu/article.html?aid=176,para posteriormente realizar un MBA en IESE.,degree,
+tanner-hackett,https://www.insurtechny.com/?p=9529,He also completed an international exchange program at IESE Business School.,exchange,
+avi-meir,https://www.iese.edu/stories/40-best-entrepreneurs-under-40-2022,"Avi Meir, an IESE MBA alum who founded the unicorn startup",degree,
+benedicto-haryono,https://compasslist.com/founders/Benedicto-Haryono,Having studied at the IESE Business School,unknown,
+stefan-moller,https://prdt.iese.edu/EIC-Newsletter-July-2025-35-EN,IESE 40under40 2022 awardee Stefan Möller,degree,
+carlos-buesa-arjol,https://biography.omicsonline.org/spain/oryzon/carlos-buesa-1783622,He also completed the Senior Management Program (PADE) at IESE in 2005.,executive,
+enrique-linares-plaza,https://www.iese.edu/standout/es/?p=6500,por el IESE y premio IESE 40under40,degree,
+enrique-lizaso,https://www.iese.edu/es/noticias/iese-emprendimiento-cuantica/,cofundada por el alumni de IESE Enrique Lizaso,degree,
+timo-buetefisch,https://iese.edu/standout/timo-buetefisch-cooltra-founder,he began his MBA at IESE,degree,
+javier-darriba,https://www.seedrocket.com/mentores/mentores-nuestros/javier-darriba/,ha cursado el Advanced Management Program en IESE,executive,
+daniel-callaghan-2,https://www.cityam.com/?p=2400943,MBA at IESE Business School,degree,
+ferran-nogue,https://www.viaempresa.cat/es/empresa/annus-horribilis-holaluz-exito-tres-companeros-estudios-desenlace-incierto_2197424_102.html,"Carlota Pi, Ferran Nogué y Oriol Vila, estudiantes del máster Business Management en IESE",degree,
+oriol-vila,https://www.viaempresa.cat/es/empresa/annus-horribilis-holaluz-exito-tres-companeros-estudios-desenlace-incierto_2197424_102.html,"Carlota Pi, Ferran Nogué y Oriol Vila, estudiantes del máster Business Management en IESE",degree,
+carlota-pi,https://www.viaempresa.cat/es/empresa/annus-horribilis-holaluz-exito-tres-companeros-estudios-desenlace-incierto_2197424_102.html,"Carlota Pi, Ferran Nogué y Oriol Vila, estudiantes del máster Business Management en IESE",degree,
+luca-carlucci,https://me.sh/profile/luca-carlucci,He earned his MBA from the prestigious IESE Business School,degree,
+cristina-aleixendri-munoz,https://www.iese.edu/stories/40-best-entrepreneurs-under-40-2022/,IESE Executive MBA and co-founder of Bound4Blue,degree,
+oscar-mendez,https://me.sh/profile/oscar-soto,Advanced degrees from IESE Business School,unknown,
+kalle-radage,https://unboundequity.com/about/,an MBA from IESE in Spain,degree,
+vincent-sos,https://prdt.iese.edu/EIC-Newsletter-July-2024-14-EN,"InvestCloud, co-founded by IESE alumnus Vincent Sos (GEMBA'08) in 2010",degree,
+mario-cantero-5b08,https://imubiosciences.com/about-us/mario-cantero-mba,He holds an MBA from IESE Business School,degree,
+jordi-blasco,https://prdt.iese.edu/EIC-Newsletter-Mar-2024-5-EN,"co-founded in 2019 by Jordi Blasco, IESE GMP 08",executive,
+damaso-quintana,https://www.arteche.com/en/board-directors,holds an MBA from IESE,degree,
+eva-romagosa,https://www.iese.edu/es/noticias/executive-mba-vajes-autocar/,graduados del Executive MBA del IESE en 2013,degree,
+alex-canals,https://www.iese.edu/stories/executive-mbas-bus-travel/,As Alex Canals was completing his Executive MBA at IESE,degree,
+rui-fernandes,https://blog.iese.edu/entrepreneurship/2021/02/12/finaves-financing-us-busup/,while doing an Executive MBA at IESE,degree,
+marc-subirats,https://blog.iese.edu/estilosdedireccion/2011/02/23/emprendiendo-desde-el-mba/,que el IESE inculca a sus alumnos,degree,
+felix-schollmeier,https://versicherungsmonitor.de/koepfe-der-branche-schollmeier-felix/,einen Master of Business Administration von der IESE Business School in Barcelona,degree,
+oscar-macia,https://www.sage.com/es-es/blog/author/oscarmacia/,un Executive MBA de IESE Business School,degree,
+hernan-scapusio,https://investors.agiletv.com/?p=25221,Management Development Program (PPD) from the IESE Business School (Spain),executive,
+raul-insa,https://www.biocat.cat/en/current-news/news/repositioning-we-shave-5-or-6-years-drug-development-time,He has also participated in executive programs at IESE and Harvard.,executive,
+ernest-pérez-mas,https://parlem.com/en/investors/,an Executive Education (PDG) from IESE,executive,
+carles-franquesa,https://www.techbarcelona.com/en/?p=80215,MBA from ESADE and a PDG from IESE,executive,
+martin-huete,https://me.sh/profile/martin-huete,He earned a Master in Business Administration from the IESE Business School,degree,
+ruben-bonet,https://www.digitalsme.eu/event-forum-ict-standards-smes/,an MBA at IESE Business School,degree,
+guillem-serra,https://www.arena-international.com/speaker/guillem-serra-autonell/,with an MBA from IESE Business School,degree,
+ignasi-vilajosana,https://www.worldsensing.com/about-us/,has business training at Harvard and IESE Business School,unknown,Ignasi Vilajosana
+ana-maiques,https://en.wikipedia.org/wiki/Ana_Maiques,She has also completed IESE Business School's advanced management program.,executive,Ana Maiques
+josé-manuel-martínez-vázquez,https://www.techbarcelona.com/en/tb-members-calling-87-jose-manuel-martinez-prueba-equivocate-y-corrige-rapido/,MBA from IESE and co-founder of Opencasa,degree,José Manuel Martínez
+david-hernandez-pumarega,https://www.escolasert.com/es/la-escuela/equipo-docente/david-hernandez-pumarega,realiza un Máster en Dirección de Empresas por IESE.,degree,David Hernández Pumarega

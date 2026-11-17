@@ -34,10 +34,11 @@ const CHECKED = {
           source: { type: 'string' },
           match: { type: 'string' },
           programme: { type: 'string', enum: ['degree', 'executive', 'exchange', 'unknown'] },
+          name: { type: 'string' },
           corroboration: { type: 'string' },
           note: { type: 'string' },
         },
-        required: ['id', 'verdict', 'source', 'match', 'programme', 'corroboration', 'note'],
+        required: ['id', 'verdict', 'source', 'match', 'programme', 'name', 'corroboration', 'note'],
       },
     },
   },
@@ -73,29 +74,36 @@ Return one result per claim, with the id exactly as given:
 - verdict: "confirmed" only if you read the statement on the source page yourself; "rejected" if the page does not say it or is about someone else; "unsure" if you could not load the page or cannot tell.
 - source and match: the page and exact phrase you verified (4 to 15 words copied character-for-character, containing the word IESE). Repeat the given ones if they hold.
 - programme: degree (MBA, EMBA, master), executive (PDD, PDG, PADE, AMP, other executive education), exchange, or unknown.
+- name: the person's name exactly as the source page writes it (the name given in the claim is sometimes wrong).
 - corroboration: URL of the second page, or "".
 - note: one short sentence on what you found.`
 
 const chunk = (list, n) => list.reduce((acc, x, i) => (i % n ? acc[acc.length - 1].push(x) : acc.push([x]), acc), [])
 const byId = Object.fromEntries(args.founders.map((f) => [f.id, f]))
 
-const fresh = pipeline(
-  chunk(args.founders, args.perAgent || 1),
-  (group, _g, i) => agent(findPrompt(group), { label: `find:${i + 1}`, phase: 'Find', model: 'haiku', schema: FOUND, agentType: 'general-purpose' }),
-  async (found, group, i) => {
-    const returned = (found && found.results) || []
-    const catches = returned.filter((r) => r.source && r.match && byId[r.id])
-    const misses = group.filter((f) => !catches.some((c) => c.id === f.id)).map((f) => f.id)
-    if (!catches.length) return { misses, checked: [] }
-    const claims = catches.map((c) => ({ ...c, name: byId[c.id].name, company: byId[c.id].company, linkedin: byId[c.id].linkedin }))
-    const res = await agent(checkPrompt(claims), { label: `check:${i + 1}`, phase: 'Fact-check', model: 'sonnet', schema: CHECKED, agentType: 'general-purpose' })
-    return { misses, haiku: catches, checked: (res && res.results) || [] }
-  },
+// Haiku searches one group of founders per agent. Its catches are then pooled and fact-checked a few per Sonnet agent,
+// which costs less than half as much per claim as one agent each.
+const found = (
+  await parallel(
+    chunk(args.founders, args.perAgent || 1).map((group, i) => () =>
+      agent(findPrompt(group), { label: `find:${i + 1}`, phase: 'Find', model: 'haiku', schema: FOUND, agentType: 'general-purpose' }),
+    ),
+  )
 )
-const again = parallel(
-  chunk(args.recheck || [], 6).map((rows, i) => () =>
-    agent(checkPrompt(rows), { label: `recheck:${i + 1}`, phase: 'Fact-check', model: 'sonnet', schema: CHECKED, agentType: 'general-purpose' }),
-  ),
+  .filter(Boolean)
+  .flatMap((r) => r.results || [])
+const claims = found
+  .filter((r) => r.source && r.match && byId[r.id])
+  .map((c) => ({ ...c, name: byId[c.id].name, company: byId[c.id].company, linkedin: byId[c.id].linkedin }))
+const groups = [...chunk(claims, args.perCheck || 5), ...chunk(args.recheck || [], args.perCheck || 5)]
+log(`Haiku returned ${found.length} of ${args.founders.length} founders and caught ${claims.length}; Sonnet checks ${groups.length} groups`)
+const checked = (
+  await parallel(
+    groups.map((rows, i) => () =>
+      agent(checkPrompt(rows), { label: `check:${i + 1}`, phase: 'Fact-check', model: 'sonnet', schema: CHECKED, agentType: 'general-purpose' }),
+    ),
+  )
 )
-const [f, a] = await Promise.all([fresh, again])
-return { fresh: f, recheck: a.filter(Boolean).flatMap((r) => r.results) }
+  .filter(Boolean)
+  .flatMap((r) => r.results || [])
+return { searched: found.length, caught: claims.length, checked }
