@@ -16,7 +16,7 @@ An independent rebuild of IESE's Founders Radar. Read [README.md](README.md) for
 - Do not use IESE or Crunchbase logos or branding. The site says it is unofficial and names its source.
 - Scrape gently: a few requests per second at most, and only the public listing pages.
 - Do not make the site public, attach a domain or change hosting without Hanif's approval.
-- Only `/` and `/login` are public. The public page may show the located startups in `prototype/locations.json` and nothing else from the dataset; everything else stays under `/dashboard`, which `proxy.ts` guards.
+- Only `/`, `/login` and `/auth/callback` are public. The public page may show the located startups in `prototype/locations.json` and nothing else from the dataset; everything else stays under `/dashboard`, which `proxy.ts` guards.
 - Never commit secrets.
 - Run `npm run check` before you push.
 - Report browser and device checks separately from automated checks. A narrow viewport is not a phone.

@@ -8,7 +8,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 - Built a working single-page prototype in `prototype/` (16 Nov).
 - Scaffolded the site: Next.js, TypeScript, Tailwind, shadcn (17 Nov).
 - Built the dashboard: ObsidianUI shell with Startups, Founders, News and Globe views (17 Nov).
-- Made the globe the public home page and put the dashboard behind a shared-password login (17 Nov).
+- Made the globe the public home page and put the dashboard behind a Supabase login limited to `@iese.net` (17 Nov).
 - Collected locations for 10 startups from their own websites (17 Nov).
 - Adapted the 21st.dev globe to startups (`components/ui/startup-globe.tsx`) and put it on the home page with the 10 located startups (17 Nov).
 
@@ -26,8 +26,8 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 
 1. **Public or private data.** The data is Crunchbase's, republished by IESE. Check Crunchbase's terms, or ask IESE's Entrepreneurship and Innovation Center, before the site goes public.
 2. **Globe.** It shows the 10 startups in `prototype/locations.json`. Open: whether to extend locations (each is a manual lookup, and some sites block scraping or state no address); where employee count or funding stage would come from, since the source has neither (the card shows total raised instead); and how to handle pins that overlap, since eight of the ten are in Europe.
-3. **Login.** One shared password (`DASHBOARD_PASSWORD`) with no accounts and no limit on guesses. Decide whether that is enough or whether people need their own sign-in.
-3. **Logos and photos.** The source hotlinks Crunchbase images. Decide whether to hotlink, cache, or stay text-only.
-4. **Refresh cadence.** Manual `./scraper/run.sh` for now; a scheduled job only if the site stays up past launch.
-5. **Missing fields.** Country and sector are not in the source. Adding them means another data source.
-6. **Name and domain.**
+3. **Login.** Built but not yet tried end to end: it needs the Supabase publishable key on Vercel, the Azure provider enabled in Supabase, and a real `@iese.net` sign-in. IESE's IT may block outside apps, in which case only the emailed link works. Supabase's built-in email sender allows only a few messages an hour, so the emailed link needs a custom SMTP sender before wider use.
+4. **Logos and photos.** The source hotlinks Crunchbase images. Decide whether to hotlink, cache, or stay text-only.
+5. **Refresh cadence.** Manual `./scraper/run.sh` for now; a scheduled job only if the site stays up past launch.
+6. **Missing fields.** Country and sector are not in the source. Adding them means another data source.
+7. **Name and domain.**

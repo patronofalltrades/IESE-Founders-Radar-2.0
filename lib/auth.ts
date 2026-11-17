@@ -1,9 +1,7 @@
-export const SESSION_COOKIE = "fr_session";
+export const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+export const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? "";
 
-/** What the session cookie must hold. Null when no password is configured, which keeps the dashboard locked. */
-export async function sessionToken() {
-  const password = process.env.DASHBOARD_PASSWORD;
-  if (!password) return null;
-  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`founders-radar:${password}`));
-  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
-}
+const ALLOWED_DOMAIN = "@iese.net";
+
+/** Only signed-in people with an IESE address may see the dashboard. */
+export const isAllowed = (email?: string | null) => !!email && email.toLowerCase().endsWith(ALLOWED_DOMAIN);

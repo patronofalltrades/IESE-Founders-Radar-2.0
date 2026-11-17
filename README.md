@@ -9,7 +9,7 @@ Target: live by Thanksgiving, Thursday 26 November 2026. The plan is in [PLAN.md
 | Path | What it is |
 | --- | --- |
 | `app/` | The site: Next.js App Router, TypeScript, Tailwind. `/` is the public globe; `/dashboard` (startups), `/dashboard/founders` and `/dashboard/news` are behind `/login`. Tokens are in `app/globals.css`. |
-| `proxy.ts` | Sends anyone without a valid session cookie from `/dashboard` to `/login`. |
+| `proxy.ts` | Sends anyone who is not signed in with an `@iese.net` address from `/dashboard` to `/login`. The allowed domain is in `lib/auth.ts`. |
 | `components/dashboard.tsx` | The sidebar and header around every page. Add a nav item here when you add a route. |
 | `components/block/dashboard-shell.tsx` | The ObsidianUI dashboard shell, copied from `https://www.obsidianui.dev/r/dashboard-shell.json`. Its colours are in `dashboard-shell.css` beside it. |
 | `components/ui/` | shadcn components. `startup-globe.tsx` is adapted from the 21st.dev testimonial globe. |
@@ -31,13 +31,13 @@ npm run dev
 
 Then open http://localhost:3000.
 
-The dashboard is locked until a password is set. Put one in `.env.local` (git-ignored) for local work, and add the same variable under Settings → Environment Variables on Vercel:
+The dashboard is locked until Supabase is configured. People sign in with their `@iese.net` Microsoft account, or with a link emailed to that address. Put the project's URL and publishable key in `.env.local` (git-ignored) for local work, and add the same two variables under Settings → Environment Variables on Vercel. Both values are public by design; no secret key is used.
 
 ```bash
-echo 'DASHBOARD_PASSWORD=choose-a-password' > .env.local
+printf 'NEXT_PUBLIC_SUPABASE_URL=https://fvwzptutdwnjenbivqrh.supabase.co\nNEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=paste-the-publishable-key\n' > .env.local
 ```
 
-Everyone shares that one password. Changing it logs everyone out.
+The Microsoft button needs the Azure provider enabled in Supabase with its tenant URL set to IESE's tenant, `https://login.microsoftonline.com/ed0cd196-c46d-43d9-813e-500e8c413eda`, so only IESE accounts can use it. Every address the site runs on needs `<address>/auth/callback` in Supabase's redirect URL list.
 
 Before pushing, run:
 
