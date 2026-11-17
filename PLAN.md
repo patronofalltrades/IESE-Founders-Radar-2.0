@@ -9,6 +9,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 - Scaffolded the site: Next.js, TypeScript, Tailwind, shadcn (17 Nov).
 - Collected locations for 10 startups from their own websites (17 Nov).
 - Adapted the 21st.dev globe to startups (`components/ui/startup-globe.tsx`) and put it on the home page with the 10 located startups (17 Nov).
+- Removed duplicates from the data in `scraper/build.py`: two repeated company profiles, one repeated founder, two repeated co-founder names and 21 repeated headlines (17 Nov).
 
 ## Next
 
