@@ -6,7 +6,7 @@ An independent rebuild of IESE's Founders Radar. Read [README.md](README.md) for
 
 1. **Make the smallest change that meets the requirement.** Ask before adding code for problems that are only theoretical.
 2. **No taglines, helper text or decorative labels.** If a screen needs one to make sense, fix the layout.
-3. **One source of truth per fact.** Data lives in `prototype/data.json` and is only written by `scraper/`. Never hand-edit it.
+3. **One source of truth per fact.** Data lives in `prototype/data.json` and is only written by `scraper/`. Never hand-edit it. Design tokens live in `app/globals.css`.
 4. **Keep PLAN.md current.** Move finished steps to Done and delete anything that no longer applies.
 
 ## Invariants
@@ -17,4 +17,14 @@ An independent rebuild of IESE's Founders Radar. Read [README.md](README.md) for
 - Scrape gently: a few requests per second at most, and only the public listing pages.
 - Do not make the site public, attach a domain or change hosting without Hanif's approval.
 - Never commit secrets.
+- Run `npm run check` before you push.
 - Report browser and device checks separately from automated checks. A narrow viewport is not a phone.
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
