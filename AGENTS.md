@@ -6,7 +6,7 @@ An independent rebuild of IESE's Founders Radar. Read [README.md](README.md) for
 
 1. **Make the smallest change that meets the requirement.** Ask before adding code for problems that are only theoretical.
 2. **No taglines, helper text or decorative labels.** If a screen needs one to make sense, fix the layout.
-3. **One source of truth per fact.** Data lives in `prototype/data.json` and `prototype/locations.json`, both written only by `scraper/`. Never hand-edit them. To add a location, add a row to `scraper/locations.csv` with a page on the company's own site that states the city. Design tokens live in `app/globals.css`.
+3. **One source of truth per fact.** Data lives in `prototype/data.json`, `prototype/locations.json` and `prototype/alumni.json`, all written only by `scraper/`. Never hand-edit them. To add a location, add a row to `scraper/locations.csv` with a page on the company's own site that states the city. To confirm a founder's IESE link, add a row to `scraper/alumni.csv` with a public page and the sentence on it that states the link. Design tokens live in `app/globals.css`.
 4. **Keep PLAN.md current.** Move finished steps to Done and delete anything that no longer applies.
 
 ## Invariants

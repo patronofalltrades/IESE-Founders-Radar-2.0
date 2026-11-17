@@ -12,6 +12,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 - Removed duplicates from the data in `scraper/build.py`: two repeated company profiles, one repeated founder, two repeated co-founder names and 21 repeated headlines (17 Nov).
 - Checked the data against the downloaded pages and fixed two parser bugs: one missed founder, six headlines without a date (17 Nov).
 - Kept only headlines whose title or URL names the company: 486 of 1,041 (17 Nov).
+- Piloted confirming founders' IESE link against a second public page: 12 of the 20 searched are confirmed in `prototype/alumni.json` (17 Nov).
 - Started the build: Startups, Founders and News pages with search, sort and filters; shared header and footer; both funding totals on the home page (17 Nov).
 
 ## Next
@@ -32,7 +33,8 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 4. **Refresh cadence.** Manual `./scraper/run.sh` for now; a scheduled job only if the site stays up past launch.
 5. **Missing fields.** Country and sector are not in the source. Adding them means another data source.
 6. **Name and domain.**
-7. **What the source does not support.** Found in the 17 Nov data check; decide how the build handles each.
+7. **Unconfirmed IESE links.** The source labels all 574 founders "IESE Business School" on Crunchbase's word. 12 are confirmed so far. Open: how far to extend the search (a scheduled job is proposed), whether executive and exchange programmes count, and how the site words and marks confirmed against listed founders. Nothing on the site uses `alumni.json` yet.
+8. **What the source does not support.** Found in the 17 Nov data check; decide how the build handles each.
    - 613 of 1,047 startups name no IESE founder (424 name no founder at all). They hold 62% of the €23.6B total raised; Lazada alone is 31%. The home page shows both totals; the list still includes them, with an "IESE founder named" filter.
    - 238 of 574 founder cards name a company that is not in the startup list, and the role shown is the person's current job, not always a founding role.
    - The "last updated" date is 4 Jul 2022 on every card, so it says nothing.

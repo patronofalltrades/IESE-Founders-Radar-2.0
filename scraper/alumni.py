@@ -2,7 +2,7 @@
 
 Each row names a founder, a public page, and a sentence on that page that states their IESE degree.
 A row is only written if the sentence is still on the page and mentions IESE, and the page also
-names the person and one of their companies. Pages on the source site, Crunchbase and LinkedIn
+names the person and one of their companies (any word of four letters or more from the company name). Pages on the source site, Crunchbase and LinkedIn
 do not count: they are the claim being checked.
 """
 import csv, html, json, pathlib, re, subprocess, sys, time, unicodedata, urllib.parse
@@ -38,7 +38,7 @@ for row in csv.DictReader(open(HERE / "alumni.csv", encoding="utf-8")):
     page, match, who = fold(get(row["source"])), fold(row["match"]), fold(name).split()
     ok = (who and not host.endswith(BARRED) and "iese" in match.split() and f" {match} " in f" {page} "
           and f" {' '.join(who[:2])} " in f" {page} "
-          and any(f" {fold(c).split()[0]} " in f" {page} " for c in companies if fold(c)))
+          and any(f" {w} " in f" {page} " for c in companies for w in fold(c).split() if len(w) >= 4))
     if ok:
         out.append({"id": row["id"], "source": row["source"]})
     else:
