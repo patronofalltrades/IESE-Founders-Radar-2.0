@@ -6,3 +6,5 @@ run,model,founders,agents,input,cache_write,cache_read,output,usd,usd_per_founde
 2026-11-17 run 2 fact-check (1 claim per Sonnet agent),claude-sonnet-5-5,28,28,194,1005350,7555032,20971,3.479,0.1242
 2026-11-17 run 3 find (1 founder per Haiku agent),claude-haiku-5-5,60,60,652,2292173,27401829,99446,0.6103,0.0102
 2026-11-17 run 3 fact-check (5 claims per Sonnet agent),claude-sonnet-5-5,22,5,36,242190,1461882,10338,0.8551,0.0389
+2026-11-17 run 4 find (1 founder per Haiku agent),claude-haiku-5-5,60,60,610,2352776,25418097,90551,0.5936,0.0099
+2026-11-17 run 4 fact-check (5 claims per Sonnet agent),claude-sonnet-5-5,16,4,28,198823,1138767,8121,0.6922,0.0433
