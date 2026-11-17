@@ -1,4 +1,4 @@
-import json,re,sys,collections,datetime,html
+import json,re,sys,collections,datetime,html,unicodedata
 d=json.load(open(sys.argv[1]))
 MON={m:i+1 for i,m in enumerate('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split())}
 def iso(s):
@@ -19,6 +19,13 @@ key=lambda t:re.sub(r'\W+','',t.casefold())
 # Second Crunchbase profile of a company already listed -> the profile it is folded into.
 # Only pairs checked by hand: same name and founding year alone is not enough (Duplo, Beston and Impactmedia are different firms).
 MERGE={'cabital-5a9e':'cabital','deallaunch-ai-fd83':'deallaunch-ai'}
+fold=lambda t:unicodedata.normalize('NFKD',t).encode('ascii','ignore').decode().casefold()
+# The source attaches headlines loosely. Keep one only if its title or URL names the company:
+# the whole name, or the first word of a longer name when that word has four letters or more.
+def named(name,h):
+    t=re.findall(r'[a-z0-9]+',fold(name));x=fold(h[0]+' '+h[3])
+    hit=lambda w:re.search(r'(?<![a-z0-9])'+r'[\W_]*'.join(w)+r'(?![a-z0-9])',x)
+    return bool(t) and bool(hit(t) or (len(t)>1 and len(t[0])>=4 and hit(t[:1])))
 def uniq(rows,used):
     r=[]
     for x in rows:
@@ -54,12 +61,13 @@ for a,b in MERGE.items():
         if f in a: b.setdefault(f,a[f])
     for f in 'f','o','h':
         if f in a: b[f]=b.get(f,[])+a[f]
-    if 'h' in b: b['h']=sorted(b['h'],key=lambda n:n[2],reverse=True)[:3]
+    if 'h' in b: b['h']=sorted(b['h'],key=lambda n:n[2],reverse=True)
 for o in out:
     names=set()
+    if 'h' in o: o['h']=[h for h in o['h'] if named(o['n'],h)]
     for f in 'f','o','h':
         if f in o:
-            o[f]=uniq(o[f],set() if f=='h' else names)
+            o[f]=uniq(o[f],set() if f=='h' else names)[:3 if f=='h' else None]
             if not o[f]: del o[f]
 ps={};people=[]
 for f in d['founders']:

@@ -8,7 +8,9 @@ Target: live by Thanksgiving, Thursday 26 November 2026. The plan is in [PLAN.md
 
 | Path | What it is |
 | --- | --- |
-| `app/` | The site: Next.js App Router, TypeScript, Tailwind. Tokens are in `app/globals.css`. |
+| `app/` | The site: Next.js App Router, TypeScript, Tailwind. Home, `/startups`, `/founders` and `/news`. Tokens are in `app/globals.css`. |
+| `components/` | The three lists and the header navigation. `listing.tsx` holds what the lists share. |
+| `lib/` | `data.ts` reads the dataset and types it; `format.ts` formats money and dates. |
 | `components/ui/` | shadcn components. `startup-globe.tsx` is the home page globe, adapted from the 21st.dev testimonial globe. |
 | `prototype/data.json` | The scraped dataset the site reads (1,047 startups, 574 founders). |
 | `prototype/index.html` | The earlier single-file prototype: search, sort, filters, founders and news views. |
@@ -47,7 +49,7 @@ Then open http://localhost:8000. It needs a server because the page fetches `dat
 ./scraper/run.sh
 ```
 
-This downloads about 190 listing pages at a gentle rate into `scraper/raw/` (git-ignored), parses them, removes duplicates and writes `prototype/data.json`.
+This downloads about 190 listing pages at a gentle rate into `scraper/raw/` (git-ignored), parses them, removes duplicates, drops headlines that do not name the company and writes `prototype/data.json`.
 
 ## Refresh the locations
 
@@ -59,4 +61,4 @@ This re-reads each source page listed in `scraper/locations.csv`, drops any row 
 
 ## Data
 
-The source site takes its data from Crunchbase. Each startup has a name, description, founding year, total raised (when disclosed), last funding date, IESE and other founders, and up to three headlines. There is no country or sector field. Field names are short to keep the file small; `scraper/build.py` is the reference for what each one means.
+The source site takes its data from Crunchbase. Each startup has a name, description, founding year, total raised (when disclosed), last funding date, IESE and other founders, and up to three headlines that name the company in their title or URL. There is no country or sector field. Field names are short to keep the file small; `scraper/build.py` is the reference for what each one means.

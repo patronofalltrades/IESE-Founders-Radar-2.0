@@ -11,6 +11,8 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 - Adapted the 21st.dev globe to startups (`components/ui/startup-globe.tsx`) and put it on the home page with the 10 located startups (17 Nov).
 - Removed duplicates from the data in `scraper/build.py`: two repeated company profiles, one repeated founder, two repeated co-founder names and 21 repeated headlines (17 Nov).
 - Checked the data against the downloaded pages and fixed two parser bugs: one missed founder, six headlines without a date (17 Nov).
+- Kept only headlines whose title or URL names the company: 486 of 1,041 (17 Nov).
+- Started the build: Startups, Founders and News pages with search, sort and filters; shared header and footer; both funding totals on the home page (17 Nov).
 
 ## Next
 
@@ -19,7 +21,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 | 17–18 Nov | Jobs to be done. Run Hanif's AI PM course prompts against the source site and the prototype. | `docs/JTBD.md` |
 | 18–20 Nov | Design references. Collect patterns from 21st.dev, Arc and Mobbin; pick a direction. | `docs/DESIGN.md` |
 | 20–21 Nov | Decide hosting and set up a preview deploy. | Preview URL |
-| 21–25 Nov | Build against the jobs and the design direction. | Feature-complete preview |
+| 21–25 Nov | Finish the build against the jobs and the design direction. Not yet ported from the prototype: the founding-year chart that filters the list. | Feature-complete preview |
 | 25–26 Nov | Checks on a real phone and by keyboard, then release. | Live site |
 
 ## Open decisions
@@ -31,8 +33,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 5. **Missing fields.** Country and sector are not in the source. Adding them means another data source.
 6. **Name and domain.**
 7. **What the source does not support.** Found in the 17 Nov data check; decide how the build handles each.
-   - 613 of 1,047 startups name no IESE founder (424 name no founder at all). They hold 62% of the €23.6B total raised; Lazada alone is 31%.
+   - 613 of 1,047 startups name no IESE founder (424 name no founder at all). They hold 62% of the €23.6B total raised; Lazada alone is 31%. The home page shows both totals; the list still includes them, with an "IESE founder named" filter.
    - 238 of 574 founder cards name a company that is not in the startup list, and the role shown is the person's current job, not always a founding role.
-   - Headlines are matched by company name in the source, so some are about another company or a whole sector. About half do not mention the startup's name.
    - The "last updated" date is 4 Jul 2022 on every card, so it says nothing.
    - Six startups have a last funding date earlier than their founding year.

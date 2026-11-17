@@ -1,17 +1,16 @@
-import data from "@/prototype/data.json";
 import locations from "@/prototype/locations.json";
 import { StartupGlobe } from "@/components/ui/startup-globe";
+import { founders, startups } from "@/lib/data";
+import { eur } from "@/lib/format";
 
-type Startup = { id: string; n: string; y?: number; r?: number; f?: string[][]; o?: string[][] };
-
-const startups = data.startups as Startup[];
-const eur = (n: number) => (n >= 1e9 ? `€${(n / 1e9).toFixed(1)}B` : `€${Math.round(n / 1e6)}M`);
-
+const sum = (list: typeof startups) => eur(list.reduce((total, s) => total + (s.r ?? 0), 0));
 const funded = startups.filter((s) => s.r);
+const fundedIese = funded.filter((s) => s.f);
 const figures = [
   [startups.length.toLocaleString("en"), "startups"],
-  [data.founders.length.toLocaleString("en"), "IESE founders"],
-  [eur(funded.reduce((sum, s) => sum + (s.r ?? 0), 0)), `raised by ${funded.length} of them`],
+  [founders.length.toLocaleString("en"), "IESE founders"],
+  [sum(funded), `raised by ${funded.length} of them`],
+  [sum(fundedIese), `of it by the ${fundedIese.length} that name an IESE founder`],
 ];
 
 const byId = new Map(startups.map((s) => [s.id, s]));
@@ -34,8 +33,8 @@ const pins = locations.flatMap((place) => {
 export default function Home() {
   return (
     <main className="flex w-full flex-1 flex-col">
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 pt-16">
-        <h1 className="font-heading text-3xl font-semibold tracking-tight">Founders Radar</h1>
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 pt-10">
+        <h1 className="sr-only">Founders Radar</h1>
         <dl className="grid grid-cols-[auto_1fr] items-baseline gap-x-4 gap-y-2">
           {figures.map(([value, label]) => (
             <div key={label} className="contents">
