@@ -12,8 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Vendored from 21st.dev, kept verbatim.
-    "components/ui/testimonial-globe.tsx",
+    // Adapted from the 21st.dev testimonial globe.
+    "components/ui/startup-globe.tsx",
   ]),
 ]);
 

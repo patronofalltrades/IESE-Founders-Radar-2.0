@@ -9,13 +9,14 @@ type Vec3 = [number, number, number];
 type GlState = "pending" | "ready" | "unavailable";
 type Tone = 1 | 2 | 3 | 4 | 5;
 
-export interface GlobeTestimonial {
+export interface GlobeStartup {
   id: string;
-  /** One or two sentences. Longer quotes are clamped to four lines. */
-  quote: string;
   name: string;
-  role?: string;
-  company?: string;
+  /** Founding year. */
+  year?: number;
+  founders: string[];
+  /** Total raised, already formatted, when disclosed. */
+  raised?: string;
   /** City shown on the card and in the pin's accessible name. */
   city: string;
   /** Short country code such as "KR". Distinct values feed the country counter. */
@@ -24,45 +25,41 @@ export interface GlobeTestimonial {
   lat: number;
   /** Pin longitude in degrees (west is negative). */
   lng: number;
-  /** Square portrait shown in the pin and on the card. */
-  image: string;
-  /** Star rating from 1 to 5. */
-  rating?: number;
   /** Ring color as a chart token number (--chart-1 … --chart-5). Cycles through all five by default. */
   tone?: Tone;
 }
 
-export interface TestimonialGlobeLabels {
-  /** Accessible name of the previous-review button. */
+export interface StartupGlobeLabels {
+  /** Accessible name of the previous-startup button. */
   previous: string;
-  /** Accessible name of the next-review button. */
+  /** Accessible name of the next-startup button. */
   next: string;
   /** Start of each pin's accessible name, followed by "<name>, <city>". */
   pin: string;
 }
 
-export interface TestimonialGlobeProps extends React.ComponentProps<"section"> {
-  items: GlobeTestimonial[];
+export interface StartupGlobeProps extends React.ComponentProps<"section"> {
+  items: GlobeStartup[];
   eyebrow?: string;
   heading?: string;
   caption?: string;
-  /** Call to action rendered next to the counters, e.g. a link to all reviews. */
+  /** Call to action rendered next to the counters, e.g. a link to the full directory. */
   action?: React.ReactNode;
   /** Spin while idle. Always off when the visitor prefers reduced motion. */
   autoRotate?: boolean;
   /** Idle spin speed in radians per second. */
   rotationSpeed?: number;
-  /** Feature the reviews one by one, turning each pin to the front. Off by default and never runs with reduced motion. */
+  /** Feature the startups one by one, turning each pin to the front. Off by default and never runs with reduced motion. */
   autoplay?: boolean;
-  /** Milliseconds between two featured reviews while autoplay runs. */
+  /** Milliseconds between two featured startups while autoplay runs. */
   interval?: number;
-  /** Controlled featured review (index into items), or null for none. */
+  /** Controlled featured startup (index into items), or null for none. */
   active?: number | null;
-  /** Called whenever the featured review changes: autoplay, hover, click, keys, or a drag or spin that brings another pin to the front. */
+  /** Called whenever the featured startup changes: autoplay, hover, click, keys, or a drag or spin that brings another pin to the front. */
   onActiveChange?: (index: number | null) => void;
   /** Largest globe diameter in pixels. The globe shrinks to fit narrow containers. */
   size?: number;
-  labels?: TestimonialGlobeLabels;
+  labels?: StartupGlobeLabels;
 }
 
 const GLOBE_RADIUS = 0.8; // cobe draws the sphere at 0.8 of the half-canvas
@@ -80,10 +77,10 @@ const WIDE_MIN = 620;
 const FRONT_MARGIN = 0.06;
 const MAX_CONTENT = 1200;
 
-const DEFAULT_LABELS: TestimonialGlobeLabels = {
-  previous: "Previous review",
-  next: "Next review",
-  pin: "Show the review from",
+const DEFAULT_LABELS: StartupGlobeLabels = {
+  previous: "Previous startup",
+  next: "Next startup",
+  pin: "Show",
 };
 
 const RING = { 1: "ring-chart-1", 2: "ring-chart-2", 3: "ring-chart-3", 4: "ring-chart-4", 5: "ring-chart-5" } as const;
@@ -96,7 +93,7 @@ function cx(...classes: (string | false | null | undefined)[]) {
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 const smooth = (t: number) => t * t * (3 - 2 * t);
 
-function toneOf(item: GlobeTestimonial, index: number): Tone {
+function toneOf(item: GlobeStartup, index: number): Tone {
   return item.tone ?? (((index % 5) + 1) as Tone);
 }
 
@@ -249,28 +246,6 @@ function seededStars(count: number) {
 
 const STARS = seededStars(36);
 
-const STAR_POINTS = Array.from({ length: 10 }, (_, k) => {
-  const r = k % 2 ? 4.1 : 9.4;
-  const a = (k * Math.PI) / 5 - Math.PI / 2;
-  return `${(10 + r * Math.cos(a)).toFixed(2)},${(10.6 + r * Math.sin(a)).toFixed(2)}`;
-}).join(" ");
-
-function StarIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true" className={className}>
-      <polygon points={STAR_POINTS} fill="currentColor" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function QuoteMark({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className={className} fill="currentColor">
-      <path d="M9.6 5.5C6.4 6.5 4.4 9.3 4.4 12.9v5.6h6.2v-6.2H7.7c.2-2 1.4-3.6 3.2-4.3L9.6 5.5Zm9.4 0c-3.2 1-5.2 3.8-5.2 7.4v5.6H20v-6.2h-2.9c.2-2 1.4-3.6 3.2-4.3L19 5.5Z" />
-    </svg>
-  );
-}
-
 function Chevron({ direction }: { direction: "left" | "right" }) {
   return (
     <svg viewBox="0 0 16 16" aria-hidden="true" className="size-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -279,37 +254,8 @@ function Chevron({ direction }: { direction: "left" | "right" }) {
   );
 }
 
-function Portrait({ src, className }: { src: string; className?: string }) {
-  const [failed, setFailed] = React.useState(false);
-  const [shownSrc, setShownSrc] = React.useState(src);
-  if (shownSrc !== src) {
-    setShownSrc(src);
-    setFailed(false);
-  }
-  if (failed) {
-    return (
-      <span className={cx("grid place-items-center bg-muted text-muted-foreground", className)}>
-        <svg viewBox="0 0 24 24" aria-hidden="true" className="size-3/5" fill="currentColor">
-          <circle cx="12" cy="8.5" r="4" />
-          <path d="M4.5 21c.8-4.1 3.8-6.4 7.5-6.4s6.7 2.3 7.5 6.4Z" />
-        </svg>
-      </span>
-    );
-  }
-  return (
-    <img
-      src={src}
-      alt=""
-      draggable={false}
-      decoding="async"
-      className={cx("object-cover", className)}
-      onError={() => setFailed(true)}
-    />
-  );
-}
-
-interface QuoteCardProps {
-  item: GlobeTestimonial;
+interface StartupCardProps {
+  item: GlobeStartup;
   index: number;
   tone: Tone;
   /** Larger type and padding when the card has room. */
@@ -319,15 +265,13 @@ interface QuoteCardProps {
 }
 
 // Memoised: the ten invisible sizer cards keep their props, so a hover re-renders only the visible cards.
-const QuoteCard = React.memo(function QuoteCard({ item, index, tone, roomy, mode, ref }: QuoteCardProps) {
-  const rating = item.rating === undefined ? null : Math.max(0, Math.min(5, Math.round(item.rating)));
+const StartupCard = React.memo(function StartupCard({ item, index, tone, roomy, mode, ref }: StartupCardProps) {
   const hidden = mode !== "current";
-  const meta = [item.role, item.company].filter(Boolean).join(", ");
   return (
     <figure
       ref={ref}
-      data-quote-card={mode === "current" ? "" : undefined}
-      data-quote-leaving={mode === "leaving" ? "" : undefined}
+      data-card={mode === "current" ? "" : undefined}
+      data-card-leaving={mode === "leaving" ? "" : undefined}
       data-index={mode === "current" ? index : undefined}
       aria-hidden={hidden || undefined}
       inert={hidden || undefined}
@@ -338,49 +282,30 @@ const QuoteCard = React.memo(function QuoteCard({ item, index, tone, roomy, mode
         mode === "leaving" && "pointer-events-none",
       )}
     >
-      <div className={cx("relative flex items-center gap-3", roomy ? "h-7 pr-32" : "h-6 pr-28")}>
-        <QuoteMark className={cx("shrink-0 text-foreground/20", roomy ? "size-7" : "size-6")} />
-        {rating !== null && (
-          <span role="img" aria-label={`Rated ${rating} out of 5`} className="flex items-center gap-0.5">
-            {[0, 1, 2, 3, 4].map((k) => (
-              <StarIcon key={k} className={cx("size-3.5", k < rating ? "text-chart-4" : "text-muted-foreground/30")} />
-            ))}
-          </span>
-        )}
-      </div>
-      <blockquote
-        className={cx(
-          "relative m-0 line-clamp-4 text-pretty text-foreground",
-          roomy ? "mt-3 text-[17px] leading-7" : "mt-2 text-[15px] leading-[22px]",
-        )}
-      >
-        <p>{item.quote}</p>
-      </blockquote>
-      <figcaption className={cx("relative mt-auto flex items-center gap-3", roomy ? "pt-5" : "pt-3")}>
-        <span
-          className={cx(
-            "relative block shrink-0 overflow-hidden rounded-full bg-muted ring-2 ring-offset-2 ring-offset-card",
-            RING[tone],
-            roomy ? "size-11" : "size-9",
-          )}
-        >
-          {mode !== "sizer" && <Portrait src={item.image} className="size-full" />}
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="block truncate text-sm font-semibold">{item.name}</span>
-          {meta && <span className="block truncate text-xs text-muted-foreground">{meta}</span>}
-        </span>
-        <span className="shrink-0 text-right text-xs leading-tight text-muted-foreground">
-          <span className="block">{item.city}</span>
-          {item.country && <span className="mt-0.5 block font-mono text-[11px] uppercase tracking-wider">{item.country}</span>}
-        </span>
+      <h3 className={cx("m-0 truncate font-semibold tracking-tight", roomy ? "pr-32 text-2xl leading-7" : "pr-28 text-lg leading-6")}>
+        {item.name}
+      </h3>
+      {(item.year || item.raised) && (
+        <p className={cx("m-0 tabular-nums text-muted-foreground", roomy ? "mt-2 text-[15px]" : "mt-1 text-sm")}>
+          {[item.year && `Founded ${item.year}`, item.raised && `${item.raised} raised`].filter(Boolean).join(" · ")}
+        </p>
+      )}
+      {item.founders.length > 0 && (
+        <p className={cx("m-0 line-clamp-3 text-pretty text-foreground", roomy ? "mt-4 text-[17px] leading-7" : "mt-3 text-[15px] leading-[22px]")}>
+          {item.founders.join(", ")}
+        </p>
+      )}
+      <figcaption className={cx("mt-auto flex items-center gap-2 text-xs text-muted-foreground", roomy ? "pt-5" : "pt-3")}>
+        <span className={cx("size-2 shrink-0 rounded-full ring-2", RING[tone])} />
+        <span>{item.city}</span>
+        {item.country && <span className="font-mono text-[11px] uppercase tracking-wider">{item.country}</span>}
       </figcaption>
     </figure>
   );
 });
 
 interface PinProps {
-  item: GlobeTestimonial;
+  item: GlobeStartup;
   index: number;
   tone: Tone;
   size: number;
@@ -455,7 +380,7 @@ const Pin = React.memo(function Pin({
           featured ? "scale-[1.35] ring-[3px]" : "ring-2",
         )}
       >
-        <Portrait src={item.image} className="block size-full" />
+        <span aria-hidden="true" className="grid size-full place-items-center bg-card text-sm font-semibold text-card-foreground">{item.name.charAt(0)}</span>
       </span>
     </button>
   );
@@ -470,7 +395,7 @@ interface Turn {
   commit: boolean;
 }
 
-export function TestimonialGlobe({
+export function StartupGlobe({
   items,
   eyebrow,
   heading,
@@ -489,7 +414,7 @@ export function TestimonialGlobe({
   onFocus,
   onBlur,
   ...rest
-}: TestimonialGlobeProps) {
+}: StartupGlobeProps) {
   const text = { ...DEFAULT_LABELS, ...labels };
   const count = items.length;
   const headingId = React.useId();
@@ -605,7 +530,7 @@ export function TestimonialGlobe({
 
   const kick = () => kickRef.current();
 
-  // Ask for a new featured review. Uncontrolled, it applies at once; controlled, the host decides.
+  // Ask for a new featured startup. Uncontrolled, it applies at once; controlled, the host decides.
   const select = React.useCallback((index: number | null) => {
     const s = live.current;
     if (index === s.featured) return;
@@ -992,7 +917,7 @@ export function TestimonialGlobe({
     kickRef.current();
   }, [ready, glVersion, themeTick]);
 
-  // Autoplay: one interval per review, the turn to the next pin included.
+  // Autoplay: one interval per startup, the turn to the next pin included.
   React.useEffect(() => {
     if (!running) return;
     const id = window.setTimeout(() => {
@@ -1148,12 +1073,6 @@ export function TestimonialGlobe({
   };
 
   const tabStop = featured ?? 0;
-  const avg = (() => {
-    const rated = items.filter((item) => typeof item.rating === "number");
-    if (rated.length === 0) return null;
-    return (rated.reduce((sum, item) => sum + (item.rating ?? 0), 0) / rated.length).toFixed(1);
-  })();
-  const countries = new Set(items.map((item) => item.country ?? item.city)).size;
   const shownItem = cards.shown === null ? undefined : items[cards.shown];
   const leavingItem = cards.leaving === null ? undefined : items[cards.leaving];
   const headingSize = wide
@@ -1168,7 +1087,7 @@ export function TestimonialGlobe({
     <section
       {...rest}
       ref={setRoot}
-      data-slot="testimonial-globe"
+      data-slot="startup-globe"
       data-layout={wide ? "wide" : "stacked"}
       data-active={featured ?? ""}
       data-paused={pinned ? "true" : "false"}
@@ -1222,29 +1141,6 @@ export function TestimonialGlobe({
           )}
           {caption && <p className="m-0 mt-3 max-w-prose text-pretty text-sm text-muted-foreground">{caption}</p>}
           <div className={cx("flex flex-wrap items-center gap-x-5 gap-y-2", wide ? "mt-5 justify-start" : "mt-3 justify-center")}>
-            <dl className="m-0 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
-              <div className="flex items-baseline gap-1">
-                <dt className="order-2">{count === 1 ? "review" : "reviews"}</dt>
-                <dd className="order-1 m-0 font-semibold tabular-nums text-foreground">{count}</dd>
-              </div>
-              {avg !== null && (
-                <>
-                  <span aria-hidden="true" className="h-3 w-px bg-border" />
-                  <div className="flex items-baseline gap-1">
-                    <dt className="order-2">average</dt>
-                    <dd className="order-1 m-0 inline-flex items-center gap-1 font-semibold tabular-nums text-foreground">
-                      <StarIcon className="size-3.5 self-center text-chart-4" />
-                      {avg}
-                    </dd>
-                  </div>
-                </>
-              )}
-              <span aria-hidden="true" className="h-3 w-px bg-border" />
-              <div className="flex items-baseline gap-1">
-                <dt className="order-2">{countries === 1 ? "country" : "countries"}</dt>
-                <dd className="order-1 m-0 font-semibold tabular-nums text-foreground">{countries}</dd>
-              </div>
-            </dl>
             {action}
           </div>
         </header>
@@ -1394,7 +1290,7 @@ export function TestimonialGlobe({
           />
           <div
             ref={regionRef}
-            data-quote-region
+            data-card-region
             aria-live={running ? "off" : "polite"}
             aria-atomic="true"
             className="grid touch-pan-y"
@@ -1415,10 +1311,10 @@ export function TestimonialGlobe({
             }}
           >
             {items.map((item, i) => (
-              <QuoteCard key={`sizer-${item.id}`} item={item} index={i} tone={toneOf(item, i)} roomy={roomy} mode="sizer" />
+              <StartupCard key={`sizer-${item.id}`} item={item} index={i} tone={toneOf(item, i)} roomy={roomy} mode="sizer" />
             ))}
             {leavingItem && cards.leaving !== null && (
-              <QuoteCard
+              <StartupCard
                 key={`leaving-${cards.key}`}
                 ref={leavingRef}
                 item={leavingItem}
@@ -1429,7 +1325,7 @@ export function TestimonialGlobe({
               />
             )}
             {shownItem && cards.shown !== null && (
-              <QuoteCard
+              <StartupCard
                 key={`card-${cards.key}`}
                 ref={cardRef}
                 item={shownItem}
@@ -1489,4 +1385,4 @@ export function TestimonialGlobe({
   );
 }
 
-export default TestimonialGlobe;
+export default StartupGlobe;

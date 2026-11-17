@@ -8,7 +8,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 - Built a working single-page prototype in `prototype/` (16 Nov).
 - Scaffolded the site: Next.js, TypeScript, Tailwind, shadcn (17 Nov).
 - Collected locations for 10 startups from their own websites (17 Nov).
-- Vendored the 21st.dev globe component into `components/ui/testimonial-globe.tsx` (17 Nov).
+- Adapted the 21st.dev globe to startups (`components/ui/startup-globe.tsx`) and put it on the home page with the 10 located startups (17 Nov).
 
 ## Next
 
@@ -23,7 +23,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 ## Open decisions
 
 1. **Public or private data.** The data is Crunchbase's, republished by IESE. Check Crunchbase's terms, or ask IESE's Entrepreneurship and Innovation Center, before the site goes public.
-2. **Globe.** `prototype/locations.json` has 10 startups with a city taken from their own sites. The globe component is built for testimonials (quote, star rating, portrait, "reviews" counter), so it needs adapting to startups before it goes on a page. Decide whether to extend locations beyond 10: each one is a manual lookup, and some sites block scraping or state no address.
+2. **Globe.** It shows the 10 startups in `prototype/locations.json`. Open: whether to extend locations (each is a manual lookup, and some sites block scraping or state no address); where employee count or funding stage would come from, since the source has neither (the card shows total raised instead); and how to handle pins that overlap, since eight of the ten are in Europe.
 3. **Logos and photos.** The source hotlinks Crunchbase images. Decide whether to hotlink, cache, or stay text-only.
 4. **Refresh cadence.** Manual `./scraper/run.sh` for now; a scheduled job only if the site stays up past launch.
 5. **Missing fields.** Country and sector are not in the source. Adding them means another data source.
