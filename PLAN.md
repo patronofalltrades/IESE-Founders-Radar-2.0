@@ -12,7 +12,8 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 - Removed duplicates from the data in `scraper/build.py`: two repeated company profiles, one repeated founder, two repeated co-founder names and 21 repeated headlines (17 Nov).
 - Checked the data against the downloaded pages and fixed two parser bugs: one missed founder, six headlines without a date (17 Nov).
 - Kept only headlines whose title or URL names the company: 486 of 1,041 (17 Nov).
-- Piloted confirming founders' IESE link against a second public page: 12 of the 20 searched are confirmed in `prototype/alumni.json` (17 Nov).
+- Confirmed 15 founders' IESE link against a second public page, found by Haiku and fact-checked by Sonnet, and set up a daily scheduled run for the rest (17 Nov).
+- Reworded the site to "IESE-related founders"; executive and exchange programmes count (17 Nov).
 - Started the build: Startups, Founders and News pages with search, sort and filters; shared header and footer; both funding totals on the home page (17 Nov).
 
 ## Next
@@ -33,7 +34,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 4. **Refresh cadence.** Manual `./scraper/run.sh` for now; a scheduled job only if the site stays up past launch.
 5. **Missing fields.** Country and sector are not in the source. Adding them means another data source.
 6. **Name and domain.**
-7. **Unconfirmed IESE links.** The source labels all 574 founders "IESE Business School" on Crunchbase's word. 12 are confirmed so far. Open: how far to extend the search (a scheduled job is proposed), whether executive and exchange programmes count, and how the site words and marks confirmed against listed founders. Nothing on the site uses `alumni.json` yet.
+7. **Unconfirmed IESE links.** The source labels all 574 founders "IESE Business School" on Crunchbase's word. 15 are confirmed so far and a daily run searches 60 more until the list is done; `scraper/alumni-runs.csv` has the cost of each run. Open: Haiku found 5 of 20 when searching five founders per agent against 13 of 20 at one per agent, on different founders, so the daily run uses one per agent and re-searches those 15 misses; and two founders need a manual look (Marc Antoni Macia, whose page blocked Sonnet, and Andreas Emmenegger, whose page does not name his startup).
 8. **What the source does not support.** Found in the 17 Nov data check; decide how the build handles each.
    - 613 of 1,047 startups name no IESE founder (424 name no founder at all). They hold 62% of the €23.6B total raised; Lazada alone is 31%. The home page shows both totals; the list still includes them, with an "IESE founder named" filter.
    - 238 of 574 founder cards name a company that is not in the startup list, and the role shown is the person's current job, not always a founding role.

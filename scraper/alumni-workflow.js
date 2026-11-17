@@ -2,7 +2,7 @@ export const meta = {
   name: 'alumni-evidence',
   description: 'Haiku finds a public page stating each founder studied at IESE; Sonnet fact-checks every catch',
   phases: [
-    { title: 'Find', detail: 'Haiku, five founders per agent', model: 'haiku' },
+    { title: 'Find', detail: 'Haiku searches for a page per founder', model: 'haiku' },
     { title: 'Fact-check', detail: 'Sonnet checks each catch', model: 'sonnet' },
   ],
 }
@@ -80,7 +80,7 @@ const chunk = (list, n) => list.reduce((acc, x, i) => (i % n ? acc[acc.length - 
 const byId = Object.fromEntries(args.founders.map((f) => [f.id, f]))
 
 const fresh = pipeline(
-  chunk(args.founders, 5),
+  chunk(args.founders, args.perAgent || 1),
   (group, _g, i) => agent(findPrompt(group), { label: `find:${i + 1}`, phase: 'Find', model: 'haiku', schema: FOUND, agentType: 'general-purpose' }),
   async (found, group, i) => {
     const returned = (found && found.results) || []
@@ -93,7 +93,7 @@ const fresh = pipeline(
   },
 )
 const again = parallel(
-  chunk(args.recheck, 6).map((rows, i) => () =>
+  chunk(args.recheck || [], 6).map((rows, i) => () =>
     agent(checkPrompt(rows), { label: `recheck:${i + 1}`, phase: 'Fact-check', model: 'sonnet', schema: CHECKED, agentType: 'general-purpose' }),
   ),
 )

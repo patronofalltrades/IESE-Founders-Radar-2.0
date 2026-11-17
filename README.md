@@ -15,7 +15,7 @@ Target: live by Thanksgiving, Thursday 26 November 2026. The plan is in [PLAN.md
 | `prototype/data.json` | The scraped dataset the site reads (1,047 startups, 574 founders). |
 | `prototype/index.html` | The earlier single-file prototype: search, sort, filters, founders and news views. |
 | `prototype/locations.json` | City and coordinates for 10 startups, each with the company page that states it. |
-| `prototype/alumni.json` | Founders whose IESE link is confirmed by a second public page, with that page. Not yet shown on the site. |
+| `prototype/alumni.json` | Founders whose IESE link is confirmed by a second public page, with that page. The site links each to it. |
 | `scraper/` | Scripts that rebuild `prototype/data.json` from the source site. |
 
 ## Run the site
@@ -67,6 +67,15 @@ python3 scraper/alumni.py
 ```
 
 This re-reads each page listed in `scraper/alumni.csv` and keeps a founder only if the quoted sentence is still there, mentions IESE, and the page names the person and one of their companies. Pages on the source site, Crunchbase and LinkedIn do not count. Founders searched without a result are listed in `scraper/alumni-notfound.csv`.
+
+Rows get into `alumni.csv` through a daily scheduled run in Claude Code:
+
+1. `python3 scraper/alumni_next.py 60` prints the next 60 founders, most-funded startups first.
+2. `scraper/alumni-workflow.js` runs on them: a Haiku agent per founder searches for a page, then Sonnet agents fact-check each page found.
+3. `python3 scraper/alumni_record.py <journal> <date>` adds the Sonnet-confirmed founders to `alumni.csv` and the rest to `alumni-notfound.csv`.
+4. `python3 scraper/alumni.py` re-reads every page; a row it rejects moves to `alumni-notfound.csv`.
+5. `python3 scraper/alumni_usage.py <label> <founders> <transcripts>` appends token use and list-price cost per model to `scraper/alumni-runs.csv`.
+6. `npm run check`, commit, push.
 
 ## Data
 

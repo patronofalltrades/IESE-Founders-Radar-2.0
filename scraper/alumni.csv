@@ -1,13 +1,16 @@
-id,source,match
-mr-mitchell-elegbe,https://interswitchgroup.com/company/leadership/mitchell-elegbe,An alumnus of the IESE/Wharton/CEIBS Global CEO Program
-lucas-carne,https://hcspain.clubs.harvard.edu/article.html?aid=176,para posteriormente realizar un MBA en IESE.
-tanner-hackett,https://www.insurtechny.com/?p=9529,He also completed an international exchange program at IESE Business School.
-avi-meir,https://www.iese.edu/stories/40-best-entrepreneurs-under-40-2022,"Avi Meir, an IESE MBA alum who founded the unicorn startup"
-benedicto-haryono,https://compasslist.com/founders/Benedicto-Haryono,Having studied at the IESE Business School
-marc-antoni-macipa,https://elreferente.es/?p=1890,un MBA en el IESE Business School de la Universidad de Navarra
-stefan-moller,https://prdt.iese.edu/EIC-Newsletter-July-2025-35-EN,"celebrate Stefan Möller (MBA’14, IESE 40under40)"
-carlos-buesa-arjol,https://biography.omicsonline.org/spain/oryzon/carlos-buesa-1783622,He also completed the Senior Management Program (PADE) at IESE in 2005.
-enrique-linares-plaza,https://www.iese.edu/standout/es/?p=6500,por el IESE y premio IESE 40under40
-enrique-lizaso,https://www.iese.edu/es/noticias/iese-emprendimiento-cuantica/,cofundada por el alumni de IESE Enrique Lizaso (MBA’90)
-timo-buetefisch,https://iese.edu/standout/timo-buetefisch-cooltra-founder,he began his MBA at IESE
-javier-darriba,https://www.seedrocket.com/mentores/mentores-nuestros/javier-darriba/,ha cursado el Advanced Management Program en IESE
+id,source,match,programme
+mr-mitchell-elegbe,https://interswitchgroup.com/company/leadership/mitchell-elegbe,An alumnus of the IESE/Wharton/CEIBS Global CEO Program,executive
+lucas-carne,https://hcspain.clubs.harvard.edu/article.html?aid=176,para posteriormente realizar un MBA en IESE.,degree
+tanner-hackett,https://www.insurtechny.com/?p=9529,He also completed an international exchange program at IESE Business School.,exchange
+avi-meir,https://www.iese.edu/stories/40-best-entrepreneurs-under-40-2022,"Avi Meir, an IESE MBA alum who founded the unicorn startup",degree
+benedicto-haryono,https://compasslist.com/founders/Benedicto-Haryono,Having studied at the IESE Business School,unknown
+stefan-moller,https://prdt.iese.edu/EIC-Newsletter-July-2025-35-EN,IESE 40under40 2022 awardee Stefan Möller,degree
+carlos-buesa-arjol,https://biography.omicsonline.org/spain/oryzon/carlos-buesa-1783622,He also completed the Senior Management Program (PADE) at IESE in 2005.,executive
+enrique-linares-plaza,https://www.iese.edu/standout/es/?p=6500,por el IESE y premio IESE 40under40,degree
+enrique-lizaso,https://www.iese.edu/es/noticias/iese-emprendimiento-cuantica/,cofundada por el alumni de IESE Enrique Lizaso,degree
+timo-buetefisch,https://iese.edu/standout/timo-buetefisch-cooltra-founder,he began his MBA at IESE,degree
+javier-darriba,https://www.seedrocket.com/mentores/mentores-nuestros/javier-darriba/,ha cursado el Advanced Management Program en IESE,executive
+daniel-callaghan-2,https://www.cityam.com/?p=2400943,MBA at IESE Business School,degree
+ferran-nogue,https://www.viaempresa.cat/es/empresa/annus-horribilis-holaluz-exito-tres-companeros-estudios-desenlace-incierto_2197424_102.html,"Carlota Pi, Ferran Nogué y Oriol Vila, estudiantes del máster Business Management en IESE",degree
+oriol-vila,https://www.viaempresa.cat/es/empresa/annus-horribilis-holaluz-exito-tres-companeros-estudios-desenlace-incierto_2197424_102.html,"Carlota Pi, Ferran Nogué y Oriol Vila, estudiantes del máster Business Management en IESE",degree
+carlota-pi,https://www.viaempresa.cat/es/empresa/annus-horribilis-holaluz-exito-tres-companeros-estudios-desenlace-incierto_2197424_102.html,"Carlota Pi, Ferran Nogué y Oriol Vila, estudiantes del máster Business Management en IESE",degree
