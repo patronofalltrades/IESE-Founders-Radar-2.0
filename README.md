@@ -8,8 +8,11 @@ Target: live by Thanksgiving, Thursday 26 November 2026. The plan is in [PLAN.md
 
 | Path | What it is |
 | --- | --- |
-| `app/` | The site: Next.js App Router, TypeScript, Tailwind. Tokens are in `app/globals.css`. |
-| `components/ui/` | shadcn components. `startup-globe.tsx` is the home page globe, adapted from the 21st.dev testimonial globe. |
+| `app/` | The site: Next.js App Router, TypeScript, Tailwind. Routes: `/` startups, `/founders`, `/news`, `/globe`. Tokens are in `app/globals.css`. |
+| `components/dashboard.tsx` | The sidebar and header around every page. Add a nav item here when you add a route. |
+| `components/block/dashboard-shell.tsx` | The ObsidianUI dashboard shell, copied from `https://www.obsidianui.dev/r/dashboard-shell.json`. Its colours are in `dashboard-shell.css` beside it. |
+| `components/ui/` | shadcn components. `startup-globe.tsx` is adapted from the 21st.dev testimonial globe. |
+| `lib/data.ts` | The one place pages read the scraped data from. |
 | `prototype/data.json` | The scraped dataset the site reads (1,049 startups, 575 founders). |
 | `prototype/index.html` | The earlier single-file prototype: search, sort, filters, founders and news views. |
 | `prototype/locations.json` | City and coordinates for 10 startups, each with the company page that states it. |
@@ -31,7 +34,7 @@ Then open http://localhost:3000. Before pushing, run:
 npm run check
 ```
 
-Add shadcn components with `npx shadcn@latest add <name>`; they land in `components/ui/`.
+Add shadcn components with `npx shadcn@latest add <name>`; they land in `components/ui/`. The project uses shadcn's Base UI style, so the CLI rewrites Radix `asChild` props in third-party blocks and breaks them. If a block built on Radix fails to typecheck after install, replace the file with the registry's original source.
 
 ## Run the prototype
 

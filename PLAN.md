@@ -7,6 +7,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 - Scraped the source site and normalised it into `prototype/data.json` (16 Nov).
 - Built a working single-page prototype in `prototype/` (16 Nov).
 - Scaffolded the site: Next.js, TypeScript, Tailwind, shadcn (17 Nov).
+- Built the dashboard: ObsidianUI shell with Startups, Founders, News and Globe views (17 Nov).
 - Collected locations for 10 startups from their own websites (17 Nov).
 - Adapted the 21st.dev globe to startups (`components/ui/startup-globe.tsx`) and put it on the home page with the 10 located startups (17 Nov).
 
