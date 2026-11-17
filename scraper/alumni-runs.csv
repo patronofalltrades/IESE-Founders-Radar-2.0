@@ -1,0 +1,2 @@
+run,model,founders,agents,input,cache_write,cache_read,output,usd,usd_per_founder
+2026-11-17 pilot (1 founder per Haiku agent),claude-haiku-5-5,20,20,260,1836483,9541370,41079,0.3455,0.0173

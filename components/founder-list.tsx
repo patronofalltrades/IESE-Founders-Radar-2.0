@@ -6,7 +6,7 @@ import type { Founder } from "@/lib/data";
 import { crunchbase, fold } from "@/lib/format";
 import { Ext, Paged, Search } from "@/components/listing";
 
-export function FounderList({ founders }: { founders: Founder[] }) {
+export function FounderList({ founders, confirmed }: { founders: Founder[]; confirmed: Record<string, string> }) {
   const [q, setQ] = useState("");
   const index = useMemo(() => founders.map((p) => fold([p.n, p.c, p.ro, p.p].join(" "))), [founders]);
   const needle = fold(q.trim());
@@ -36,10 +36,11 @@ export function FounderList({ founders }: { founders: Founder[] }) {
             )}
             {p.ro && <div className="text-muted-foreground">{p.ro}</div>}
             {p.p && <div className="text-muted-foreground">{p.p}</div>}
-            {(p.li || p.x) && (
-              <div className="mt-1 flex gap-3">
+            {(p.li || p.x || confirmed[p.id]) && (
+              <div className="mt-1 flex flex-wrap gap-x-3">
                 {p.li && <Ext href={p.li}>LinkedIn</Ext>}
                 {p.x && <Ext href={p.x}>X</Ext>}
+                {confirmed[p.id] && <Ext href={confirmed[p.id]}>IESE link confirmed</Ext>}
               </div>
             )}
           </div>

@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Founders Radar",
-  description: "An unofficial directory of startups founded by IESE alumni.",
+  description: "An unofficial directory of startups with IESE-related founders.",
   robots: { index: false, follow: false },
 };
 
@@ -43,7 +43,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <a href="https://foundersradar.iese.edu/startups" className="underline underline-offset-2">
             foundersradar.iese.edu
           </a>{" "}
-          on {day(scraped)}; that site takes it from Crunchbase. Funding figures cover only companies with a disclosed amount.
+          on {day(scraped)}; that site takes it from Crunchbase. Funding figures cover only companies with a disclosed amount. A founder is IESE-related when the source lists them under IESE
+          Business School, for any programme; “IESE link confirmed” goes to a second public page that says so.
         </footer>
       </body>
     </html>

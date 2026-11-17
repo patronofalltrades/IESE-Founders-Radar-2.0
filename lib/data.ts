@@ -1,3 +1,4 @@
+import alumni from "@/prototype/alumni.json";
 import data from "@/prototype/data.json";
 
 // Field names are set by scraper/build.py.
@@ -18,3 +19,5 @@ export type Headline = { title: string; publisher: string; date: string; url: st
 export const startups = data.startups as Startup[];
 export const founders = data.founders as Founder[];
 export const scraped = data.scraped;
+// Founder id -> the public page that confirms their IESE link. Written by scraper/alumni.py.
+export const confirmed: Record<string, string> = Object.fromEntries(alumni.map((a) => [a.id, a.source]));

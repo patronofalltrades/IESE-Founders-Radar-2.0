@@ -26,7 +26,7 @@ function Group({ title, children }: { title: string; children: React.ReactNode }
   );
 }
 
-function Row({ s }: { s: Startup }) {
+function Row({ s, confirmed }: { s: Startup; confirmed: Record<string, string> }) {
   return (
     <details className="group border-b border-border last:border-b-0">
       <summary className="grid cursor-pointer list-none grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-0.5 px-4 py-3 hover:bg-muted group-open:bg-muted sm:grid-cols-[minmax(0,1fr)_3rem_5rem_6.5rem] sm:items-baseline [&::-webkit-details-marker]:hidden">
@@ -40,7 +40,7 @@ function Row({ s }: { s: Startup }) {
       </summary>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-x-8 gap-y-5 px-4 pt-1 pb-5">
         {s.f && (
-          <Group title="IESE founders">
+          <Group title="IESE-related founders">
             {s.f.map(([name, role, linkedin, id]) => (
               <li key={id}>
                 <Ext href={crunchbase("person", id)}>{name}</Ext>
@@ -48,6 +48,11 @@ function Row({ s }: { s: Startup }) {
                 {linkedin && (
                   <div className="text-muted-foreground">
                     <Ext href={linkedin}>LinkedIn</Ext>
+                  </div>
+                )}
+                {confirmed[id] && (
+                  <div className="text-muted-foreground">
+                    <Ext href={confirmed[id]}>IESE link confirmed</Ext>
                   </div>
                 )}
               </li>
@@ -84,7 +89,7 @@ function Row({ s }: { s: Startup }) {
   );
 }
 
-export function StartupList({ startups }: { startups: Startup[] }) {
+export function StartupList({ startups, confirmed }: { startups: Startup[]; confirmed: Record<string, string> }) {
   const [q, setQ] = useState(useSearchParams().get("q") ?? "");
   const [sort, setSort] = useState("r");
   const [funded, setFunded] = useState(false);
@@ -119,11 +124,11 @@ export function StartupList({ startups }: { startups: Startup[] }) {
           Funding disclosed
         </button>
         <button className={chip} aria-pressed={iese} onClick={() => setIese(!iese)}>
-          IESE founder named
+          IESE-related founder named
         </button>
       </div>
       <Paged key={`${needle}|${sort}|${funded}|${iese}`} rows={rows} total={startups.length} className="rounded-lg border border-border">
-        {(s) => <Row key={s.id} s={s} />}
+        {(s) => <Row key={s.id} s={s} confirmed={confirmed} />}
       </Paged>
     </>
   );

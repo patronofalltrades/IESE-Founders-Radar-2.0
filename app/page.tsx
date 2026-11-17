@@ -1,6 +1,6 @@
 import locations from "@/prototype/locations.json";
 import { StartupGlobe } from "@/components/ui/startup-globe";
-import { founders, startups } from "@/lib/data";
+import { confirmed, founders, startups } from "@/lib/data";
 import { eur } from "@/lib/format";
 
 const sum = (list: typeof startups) => eur(list.reduce((total, s) => total + (s.r ?? 0), 0));
@@ -8,9 +8,10 @@ const funded = startups.filter((s) => s.r);
 const fundedIese = funded.filter((s) => s.f);
 const figures = [
   [startups.length.toLocaleString("en"), "startups"],
-  [founders.length.toLocaleString("en"), "IESE founders"],
+  [founders.length.toLocaleString("en"), "IESE-related founders"],
+  [Object.keys(confirmed).length.toLocaleString("en"), "of them confirmed by a second public page"],
   [sum(funded), `raised by ${funded.length} of them`],
-  [sum(fundedIese), `of it by the ${fundedIese.length} that name an IESE founder`],
+  [sum(fundedIese), `of it by the ${fundedIese.length} that name an IESE-related founder`],
 ];
 
 const byId = new Map(startups.map((s) => [s.id, s]));
