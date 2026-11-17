@@ -8,9 +8,30 @@ Target: live by Thanksgiving, Thursday 26 November 2026. The plan is in [PLAN.md
 
 | Path | What it is |
 | --- | --- |
-| `prototype/index.html` | Single-file working prototype: search, sort, filters, founders and news views. |
-| `prototype/data.json` | The scraped dataset the prototype reads (1,049 startups, 575 founders). |
+| `app/` | The site: Next.js App Router, TypeScript, Tailwind. Tokens are in `app/globals.css`. |
+| `components/ui/` | shadcn components. `startup-globe.tsx` is the home page globe, adapted from the 21st.dev testimonial globe. |
+| `prototype/data.json` | The scraped dataset the site reads (1,049 startups, 575 founders). |
+| `prototype/index.html` | The earlier single-file prototype: search, sort, filters, founders and news views. |
+| `prototype/locations.json` | City and coordinates for 10 startups, each with the company page that states it. |
 | `scraper/` | Scripts that rebuild `prototype/data.json` from the source site. |
+
+## Run the site
+
+```bash
+npm install
+```
+
+```bash
+npm run dev
+```
+
+Then open http://localhost:3000. Before pushing, run:
+
+```bash
+npm run check
+```
+
+Add shadcn components with `npx shadcn@latest add <name>`; they land in `components/ui/`.
 
 ## Run the prototype
 
@@ -27,6 +48,14 @@ Then open http://localhost:8000. It needs a server because the page fetches `dat
 ```
 
 This downloads about 190 listing pages at a gentle rate into `scraper/raw/` (git-ignored), parses them, removes duplicates and writes `prototype/data.json`.
+
+## Refresh the locations
+
+```bash
+python3 scraper/locations.py
+```
+
+This re-reads each source page listed in `scraper/locations.csv`, drops any row whose page no longer states the city, and geocodes the rest with OpenStreetMap Nominatim (data © OpenStreetMap contributors, ODbL).
 
 ## Data
 
