@@ -41,15 +41,15 @@ for row in csv.DictReader(open(HERE / "alumni.csv", encoding="utf-8")):
     known = set(fold(name + " " + row["id"]).split())
     who = fold(row.get("name") or name).split()
     match = fold(row["match"])
-    for attempt in 1, 2:  # some sites serve a bot check now and then; one retry settles it
+    for attempt in 1, 2, 3:  # some sites serve a bot check now and then; retrying settles it
         page = fold(get(row["source"]))
         ok = (who and len(known.intersection(who)) >= min(2, len(who)) and not host.endswith(BARRED)
               and "iese" in match.split() and f" {match} " in f" {page} "
               and f" {' '.join(who[:2])} " in f" {page} "
               and any(f" {w} " in f" {page} " for c in companies for w in fold(c).split() if len(w) >= 4))
-        if ok or attempt == 2:
+        if ok or attempt == 3:
             break
-        time.sleep(5)
+        time.sleep(20)
     if ok:
         out.append({"id": row["id"], "source": row["source"]})
     else:
