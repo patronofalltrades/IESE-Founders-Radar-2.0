@@ -12,13 +12,13 @@ for p in sorted(glob.glob(R+'/s_*.html'),key=num):
         c=c.split('<div class="pagination"')[0]
         m=re.search(r'class="startupname"><a href="([^"]*)"[^>]*>(.*?)</a>',c,re.S)
         det=[txt(x) for x in re.findall(r'<td class="st_details">(.*?)</td>',c,re.S)]
-        d={'name':txt(m.group(2)),'cb':m.group(1).strip(),'logo':img(c.split('st2')[0])}
+        d={'name':txt(m.group(2)),'cb':m.group(1).strip(),'logo':img(c.split('boxstartup st2')[0])}
         j=' '.join(det)
         m2=re.search(r'Last Funding Event: ?(\d+ \w+ \d{4})',j); d['lastFunding']=m2.group(1) if m2 else ''
         m2=re.search(r'Founded (\d{4})',j); d['founded']=int(m2.group(1)) if m2 else None
         m2=re.search(r'(\S+) total raised',j); d['raised']=m2.group(1) if m2 else ''
         m2=re.search(r'class="st_description">(.*?)</td>',c,re.S); d['desc']=txt(m2.group(1)) if m2 else ''
-        parts=re.split(r'OTHER FOUNDERS',c.split('st3')[0])
+        parts=re.split(r'OTHER FOUNDERS',c.split('boxstartup st3')[0])
         d['founders']=[]
         for row in re.findall(r'<tr>(.*?)</tr>',parts[0].split('IESE FOUNDERS')[-1] if 'IESE FOUNDERS' in parts[0] else '',re.S):
             m3=re.search(r'<a href="([^"]*)"[^>]*style="color[^>]*><b>(.*?)</b></a>(.*?)(?:<a|</span>)',row,re.S)
@@ -31,7 +31,7 @@ for p in sorted(glob.glob(R+'/s_*.html'),key=num):
         d['news']=[]
         for u,t,meta in re.findall(r'<th[^>]*><a href="([^"]*)"[^>]*>(.*?)</a></th>\s*</tr>\s*<tr>\s*<td[^>]*>(.*?)</td>',st3,re.S):
             u=html.unescape(u).strip().split(', content:')[0]
-            pub,_,date=txt(meta).partition('|')
+            pub,_,date=txt(meta).rpartition('|')
             d['news'].append({'url':u,'title':txt(t),'pub':pub.strip(),'date':date.strip()})
         m2=re.search(r'last updated: ([^<]*)<',c); d['updated']=m2.group(1).strip() if m2 else ''
         startups.append(d)

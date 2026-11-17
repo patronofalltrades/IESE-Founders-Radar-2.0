@@ -10,6 +10,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 - Collected locations for 10 startups from their own websites (17 Nov).
 - Adapted the 21st.dev globe to startups (`components/ui/startup-globe.tsx`) and put it on the home page with the 10 located startups (17 Nov).
 - Removed duplicates from the data in `scraper/build.py`: two repeated company profiles, one repeated founder, two repeated co-founder names and 21 repeated headlines (17 Nov).
+- Checked the data against the downloaded pages and fixed two parser bugs: one missed founder, six headlines without a date (17 Nov).
 
 ## Next
 
@@ -29,3 +30,9 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 4. **Refresh cadence.** Manual `./scraper/run.sh` for now; a scheduled job only if the site stays up past launch.
 5. **Missing fields.** Country and sector are not in the source. Adding them means another data source.
 6. **Name and domain.**
+7. **What the source does not support.** Found in the 17 Nov data check; decide how the build handles each.
+   - 613 of 1,047 startups name no IESE founder (424 name no founder at all). They hold 62% of the €23.6B total raised; Lazada alone is 31%.
+   - 238 of 574 founder cards name a company that is not in the startup list, and the role shown is the person's current job, not always a founding role.
+   - Headlines are matched by company name in the source, so some are about another company or a whole sector. About half do not mention the startup's name.
+   - The "last updated" date is 4 Jul 2022 on every card, so it says nothing.
+   - Six startups have a last funding date earlier than their founding year.
