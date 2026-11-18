@@ -66,7 +66,7 @@ This re-reads each source page listed in `scraper/locations.csv`, drops any row 
 python3 scraper/alumni.py
 ```
 
-This re-reads each page listed in `scraper/alumni.csv` and keeps a founder only if the quoted sentence is still there, mentions IESE, and the page names the person and one of their companies. Pages on the source site, Crunchbase and LinkedIn do not count. Founders searched without a result are listed in `scraper/alumni-notfound.csv`.
+This re-reads each page listed in `scraper/alumni.csv` and keeps a founder only if the quoted sentence is still there, mentions IESE, and the page names the person and one of their companies. Pages on the source site, Crunchbase and LinkedIn do not count. A founder confirmed earlier keeps that confirmation when the page cannot be read this time, and is dropped only when the page is gone or loads without the sentence. Founders searched without a result are listed in `scraper/alumni-notfound.csv`.
 
 Rows get into `alumni.csv` through a daily scheduled run in Claude Code:
 
