@@ -2,7 +2,8 @@
 
 Each row names a founder, a public page, and a sentence on that page that states their IESE degree.
 A row is only written if the sentence is still on the page and mentions IESE, and the page also
-names the person and one of their companies (any word of four letters or more from the company name).
+names the person and one of their companies (any word of four letters or more from the company name,
+or the whole name written as one word).
 The source sometimes gets a name wrong ("Ana Valls" for Ana Maiques). A row's `name` column then
 gives the name as the page writes it; it is accepted only if two of its words are in the source's
 name or Crunchbase id for that person. Pages on the source site, Crunchbase and LinkedIn
@@ -30,7 +31,10 @@ def get(url):
 
 def fold(s):
     s = html.unescape(re.sub(r"<script.*?</script>|<style.*?</style>|<[^>]+>", " ", s, flags=re.S))
-    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode().casefold()
+    s = unicodedata.normalize("NFKD", s)
+    # punctuation such as a curly apostrophe becomes a space, so "IESE’s" stays two words; accents are dropped
+    s = "".join(c if c.isalnum() or unicodedata.combining(c) else " " for c in s)
+    s = s.encode("ascii", "ignore").decode().casefold()
     return " ".join(re.findall(r"[a-z0-9]+", s))
 
 
@@ -56,7 +60,8 @@ for row in csv.DictReader(open(HERE / "alumni.csv", encoding="utf-8")):
         named = bool(who) and f" {' '.join(who[:2])} " in f" {page} "
         ok = (named and len(known.intersection(who)) >= min(2, len(who)) and not host.endswith(BARRED)
               and "iese" in match.split() and f" {match} " in f" {page} "
-              and any(f" {w} " in f" {page} " for c in companies for w in fold(c).split() if len(w) >= 4))
+              and any(f" {w} " in f" {page} " or fold(c).replace(" ", "") in page.replace(" ", "")
+                      for c in companies for w in fold(c).split() if len(w) >= 4))
         if ok or attempt == 3:
             break
         time.sleep(20)
