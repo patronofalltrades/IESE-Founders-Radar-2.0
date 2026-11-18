@@ -9,6 +9,7 @@ Target: live by Thanksgiving, Thursday 26 November 2026. The plan is in [PLAN.md
 | Path | What it is |
 | --- | --- |
 | `app/` | The site: Next.js App Router, TypeScript, Tailwind. Tokens are in `app/globals.css`. |
+| `app/dashboard/` | The directory: founders and startups tables with a control panel and a record panel. |
 | `components/ui/` | shadcn components. `startup-globe.tsx` is the home page globe, adapted from the 21st.dev testimonial globe. |
 | `prototype/data.json` | The scraped dataset the site reads (1,049 startups, 575 founders). |
 | `prototype/index.html` | The earlier single-file prototype: search, sort, filters, founders and news views. |

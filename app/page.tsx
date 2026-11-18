@@ -1,11 +1,13 @@
 import data from "@/prototype/data.json";
 import locations from "@/prototype/locations.json";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 import { StartupGlobe } from "@/components/ui/startup-globe";
+import { eur } from "@/lib/utils";
 
 type Startup = { id: string; n: string; y?: number; r?: number; f?: string[][]; o?: string[][] };
 
 const startups = data.startups as Startup[];
-const eur = (n: number) => (n >= 1e9 ? `€${(n / 1e9).toFixed(1)}B` : `€${Math.round(n / 1e6)}M`);
 
 const funded = startups.filter((s) => s.r);
 const figures = [
@@ -45,7 +47,15 @@ export default function Home() {
           ))}
         </dl>
       </div>
-      <StartupGlobe items={pins} aria-label="Startups on the globe" />
+      <StartupGlobe
+        items={pins}
+        aria-label="Startups on the globe"
+        action={
+          <Link href="/dashboard" className={buttonVariants({ size: "lg" })}>
+            Open the directory
+          </Link>
+        }
+      />
     </main>
   );
 }
