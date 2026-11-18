@@ -17,6 +17,7 @@ Target: live by Thanksgiving, Thursday 26 November 2026. The plan is in [PLAN.md
 | `prototype/locations.json` | City and coordinates for 10 startups, each with the company page that states it. |
 | `prototype/alumni.json` | Founders whose IESE link is confirmed by a second public page, with that page. The site links each to it. |
 | `scraper/` | Scripts that rebuild `prototype/data.json` from the source site. |
+| `docs/` | Two images explaining how a founder's IESE link is confirmed: the steps, and the code that makes the final check. Figures as of 18 Nov 2026. |
 
 ## Run the site
 
