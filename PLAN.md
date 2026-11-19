@@ -12,7 +12,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 - Removed duplicates from the data in `scraper/build.py`: two repeated company profiles, one repeated founder, two repeated co-founder names and 21 repeated headlines (17 Nov).
 - Checked the data against the downloaded pages and fixed two parser bugs: one missed founder, six headlines without a date (17 Nov).
 - Kept only headlines whose title or URL names the company: 486 of 1,041 (17 Nov).
-- Confirmed 156 founders' IESE link against a second public page, found by Haiku and fact-checked by Sonnet, and set up a daily scheduled run for the rest (17 Nov).
+- Confirmed 158 founders' IESE link against a second public page, found by Haiku and fact-checked by Sonnet, over eleven runs (17–19 Nov).
 - Reworded the site to "IESE-related founders"; executive and exchange programmes count (17 Nov).
 - Started the build: Startups, Founders and News pages with search, sort and filters; shared header and footer; both funding totals on the home page (17 Nov).
 
@@ -34,7 +34,7 @@ Goal: a better Founders Radar, live by Thursday 26 November 2026.
 4. **Refresh cadence.** Manual `./scraper/run.sh` for now; a scheduled job only if the site stays up past launch.
 5. **Missing fields.** Country and sector are not in the source. Adding them means another data source.
 6. **Name and domain.**
-7. **Unconfirmed IESE links.** The source labels all 574 founders "IESE Business School" on Crunchbase's word. 156 are confirmed so far and a daily run searches 60 more until the list is done (10 left); `scraper/alumni-runs.csv` has the cost of each run. Haiku searches one founder per agent (five per agent missed 7 it later found); Sonnet checks five claims per agent. Open: six founders need a manual look because `alumni.py` cannot verify their page: Jonathan Lipnik and Sergi Pallarés (page blocks automated reading), Albert Valentí (an IESE PDF), Andreas Emmenegger (page does not name his startup), Sam Glasswell (an IESE PDF) and Borja Sanfeliu (listed only among "students or alumni").
+7. **Unconfirmed IESE links.** The source labels all 574 founders "IESE Business School" on Crunchbase's word. The search is finished: 158 are confirmed by a second public page, 404 were searched without a publishable result, and 12 have no company listed to search on. The daily scheduled run is switched off; `scraper/alumni-runs.csv` has each run's cost ($16.17 in total at list API prices). Open: about 20 founders that Sonnet confirmed are parked in `alumni-notfound.csv` because `alumni.py` could not verify the page (a PDF, a page that blocks the script, or a name spelled differently from the source, such as Pablo Meijide and Jacek Błoński) and could be recovered by hand; and the figures on the two images in `docs/` are as of 18 Nov.
 8. **What the source does not support.** Found in the 17 Nov data check; decide how the build handles each.
    - 613 of 1,047 startups name no IESE founder (424 name no founder at all). They hold 62% of the €23.6B total raised; Lazada alone is 31%. The home page shows both totals; the list still includes them, with an "IESE founder named" filter.
    - 238 of 574 founder cards name a company that is not in the startup list, and the role shown is the person's current job, not always a founding role.
